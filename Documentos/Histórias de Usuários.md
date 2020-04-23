@@ -18,7 +18,7 @@
 
 ### Esportista: 
 
--Eu gostaria de poder acessar de meus dispositivos e poder assinar o termo de compromisso de forma prática de esportes.
+-Eu gostaria de poder acessar de meus dispositivos e poder assinar o termo de compromisso de forma prática.
 
 -Para que eu possa fazer aulas ou praticar esportes radicais ou de aventura.
 
