@@ -1,0 +1,18 @@
+.menu-login{
+   position: relative;
+   text-align: center;
+   padding: 150px;
+}
+
+.menu-login h1 {
+    color: aliceblue; 
+    font-family: Apple Chancery, cursive;
+    font-weight: bold;
+}
+
+#menu-log{
+    background-image: url('../assinat.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30%;
+}

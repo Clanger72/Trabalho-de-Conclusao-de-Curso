@@ -1,0 +1,42 @@
+<div class="menu-login" id="menu-log" *ngIf=" ! loggedIn" >
+    <h1>Assinante</h1>
+    <form #f="ngForm">
+    <div class="po-row">
+      <div class="po-xl-4 po-lg-4 po-md-4 po-sm-4">
+      </div>
+      <po-input
+          class="po-lg-4"
+          name="token"
+          [(ngModel)]="literals"
+          p-label="Token"
+          (p-change)="changeLiterals()">
+        </po-input>
+    </div>
+    <div class="po-row">
+      <div class="po-xl-4 po-lg-4 po-md-4 po-sm-4">
+      </div>
+      <po-input
+        class="po-lg-4"
+        name="phone"
+        [(ngModel)]="login"
+        p-clean
+        p-label="Telefone">
+      </po-input>
+    </div>
+  </form>
+  <button mat-button style="padding: 1rem;" (click)="signInWithGoogle()">
+    <mat-icon style="width: 50px; height:30px"
+              svgIcon="logo"></mat-icon> Login With Google
+  </button>  
+</div>
+<div *ngIf="loggedIn">
+  <app-contract-page></app-contract-page>
+  <input type="text" id="user" [value]="loggedIn" readonly >
+  <!-- chamada do Json de retorno do Google API -->
+  <input type="text" id="id" [value]="user.id" readonly >
+  <input type="text" id="name" [value]="user.firstName" readonly >
+  <input type="text" id="lastname" [value]="user.lastName" readonly >
+  <input type="text" id="email2" [value]="user.email" readonly >
+</div>
+
+
