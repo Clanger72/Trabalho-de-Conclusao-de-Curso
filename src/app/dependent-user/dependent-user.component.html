@@ -1,0 +1,164 @@
+<div class="container-fluid "  *ngIf="! newDependent">
+    <div class="row">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Parentesco</th>
+                <th scope="col">Data de Nascimento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Alice</td>
+                <td>Mãe</td>
+                <td>05/03/2010</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Matheus</td>
+                <td>Mãe</td>
+                <td>10/05/2014</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Gabriela</td>
+                <td>Responsável Legal</td>
+                <td>29/07/2008</td>
+              </tr>
+              <tr>
+                <th></th>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-md-5"></div>
+          <div class="col-md-5"> 
+            <button class="col-md-2" mat-button style="padding: 0rem;" title="Criar novo dependente" (click)="createDependent()">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                    width="32" height="32"
+                    viewBox="0 0 32 32"
+                    style=" fill:#000000;">
+                    <path d="M 16 3 C 8.832031 3 3 8.832031 3 16 C 3 23.167969 8.832031 29 16 29 C 23.167969 29 29 23.167969 29 16 C 29 8.832031 23.167969 3 16 3 Z M 16 5 C 22.085938 5 27 9.914063 27 16 C 27 22.085938 22.085938 27 16 27 C 9.914063 27 5 22.085938 5 16 C 5 9.914063 9.914063 5 16 5 Z M 15 11 L 15 15 L 11 15 L 11 17 L 15 17 L 15 21 L 17 21 L 17 17 L 21 17 L 21 15 L 17 15 L 17 11 Z"></path>
+                </svg>
+            </button>
+          </div>
+    </div>
+</div>
+
+<div class="page-content inset" *ngIf="newDependent">
+    <div class="row">
+      <div class="col-md-12">
+      <br>
+      <p class="well lead">Cadastro de Dependentes</p>
+      <hr>
+      <div class="container">
+        <div class="row"> 
+            <div class="col-sm-8 contact-form">
+                <form id="contact" method="post" class="form" role="form">
+                    <div class="row">
+                        <div class="col-xs-6 col-md-3 form-group">
+                            <label for="inputCPF">CPF</label>
+                            <input class="form-control" id="inputCPF" name="CPF" placeholder="000.000.000-00" type="text" required autofocus />
+                        </div>
+                        <div class="col-xs-4 col-md-9 form-group">
+                            <label for="inputname">Nome</label>
+                            <input class="form-control" id="inputname" name="nome" placeholder="Nome Completo" type="cpf" />
+                        </div>
+                        <div class="col-xs-6 col-md-3 form-group">
+                            <label for="inputtelefone">Telefone</label>
+                            <input class="form-control" id="inputtelefone" name="telefone" placeholder="Telefone" type="text" />
+                        </div>
+                        <div class="col-xs-4 col-md-3 form-group">
+                            <label for="inputDtBirth">Data de Nascimeto</label>
+                            <input class="form-control" id="inputDtBirth" name="Nascimento" type="date" />
+                        </div>
+                        <div class="col-xs-6 col-md-3 form-group">
+                            <label for="inputtelefone">Telefone</label>
+                            <input class="form-control" id="inputtelefone" name="telefone" placeholder="Telefone" type="text" />
+                        </div>
+                        <div class="col-xs-4 col-md-3 form-group">
+                            <label for="parentesco">Parentesco</label>
+                            <select class="form-control"id="parentesco" name="Parentesco" >
+                                <option>Parentesco</option>
+                                <option>Pai</option>
+                                <option>Mãe</option>
+                                <option>Responsável Legal</option>
+                                <option>Irmão maior de 18 anos</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-4 col-md-12 form-group">
+                            <label for="inputemail">E-mail</label>
+                            <input class="form-control" id="inputemail" name="email" placeholder="E-mail" type="text" />
+                        </div>
+                    </div> <!-- fim row -->
+                    <!-- Text input endereco-->
+                    <div class="row">
+                        <div class="col-xs-6 col-md-8 form-group">
+                            <label for="inputrua">Endereço</label>
+                            <input class="form-control" id="inputrua" name="rua" placeholder="Rua"  type="text">
+                        </div><!--fim control-group-->
+                        <div class="col-xl-4 col-md-3 form-group">
+                            <label for="inputnumero">Número</label>
+                            <input class="form-control" id="inputnumero" name="numero" placeholder="000"  type="text">
+                        </div>
+                    </div>
+                    <!-- Text input cidade e estado-->
+                    <div class="row">
+                        <div class="col-xs-6 col-md-9 form-group">
+                            <label for="inputcidade">Cidade</label>
+                            <input class="form-control" id="inputcidade" name="cidade" placeholder="Cidade" type="text" />
+                        </div>
+                        <div class="col-xs-4 col-md-3 form-group">
+                            <label for="selectbasic">Estado</label>
+                            <select class="form-control"id="selectbasic" name="selectestado" >
+                                <option>Estado</option>
+                                <option>AC</option>
+                                <option>AL</option>
+                                <option>AP</option>
+                                <option>AM</option>
+                                <option>BA</option>
+                                <option>CE</option>
+                                <option>DF</option>
+                                <option>ES</option>
+                                <option>GO</option>
+                                <option>MA</option>
+                                <option>MT</option>
+                                <option>MS</option>
+                                <option>MG</option>
+                                <option>PA</option>
+                                <option>PB</option>
+                                <option>PR</option>
+                                <option>PE</option>
+                                <option>PI</option>
+                                <option>RJ</option>
+                                <option>RN</option>
+                                <option>RS</option>
+                                <option>RO</option>
+                                <option>RR</option>
+                                <option>SC</option>
+                                <option>SP</option>
+                                <option>SE</option>
+                                <option>TO</option>
+                            </select>
+                        </div>
+                    </div><!--fim Text input cidade e estado-->
+                    <br />
+                    
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 form-group">
+                            <button class="btn btn-primary pull-right" type="submit">Salvar</button>
+                            <button class="btn btn-primary pull-right" type="submit">Limpar</button>
+                            <!--<button class="btn btn-primary pull-right" type="submit">Enviar</button>-->
+                        </div>
+                    </div>
+                </form>
+            </div> <!-- fim div da direita -->
+        </div> <!-- fim div da esquerda -->
+  </div>
+</div>
+

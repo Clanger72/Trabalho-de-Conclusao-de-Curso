@@ -1,0 +1,32 @@
+<div class="container-fluid">
+    <div class="row">
+        <nav class="navbar navbar-light bg-light col-md-12 border-bottom">
+            <a class="navbar-brand" href="#">Assinantes</a>
+            <form class="form-inline my-2 my-lg-0">
+                <span class="navbar-brand mb-0 h1">User</span>
+            </form>
+        </nav>
+        <hr>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="bg-light border-right col-md-2 border-bottom rounded mt-1" id="sidebar-wrapper">
+            <div class="list-group list-group-flush">
+              <a href="#" class="list-group-item list-group-item-action bg-light text-center">Assinar</a>
+              <a href="#" class="list-group-item list-group-item-action bg-light text-center" (click)="dependent()">Dependente</a>
+              <a href="#" class="list-group-item list-group-item-action bg-light text-center" (click)="userProfile()">Perfil</a>
+              <a href="#" class="list-group-item list-group-item-action bg-light text-center">Sair</a>
+            </div>
+        </div>
+        <div *ngIf="createDependent" class="col-md-10" editProfile="false">
+            <app-dependent-user></app-dependent-user>
+        </div>
+        <div *ngIf="editProfile" class="col-md-10" createDependent="false">
+            <app-user-profile></app-user-profile>
+        </div>
+    </div>
+</div>
+
+

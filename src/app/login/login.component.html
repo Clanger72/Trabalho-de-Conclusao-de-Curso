@@ -1,0 +1,59 @@
+<div class="container-fluid" *ngIf=" ! loggedIn && ! Registring">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="center-block col-md-4 mt-5">
+            <div class="jumbotron bg-light">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">E-mail</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Senha</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Telefone</label>
+                        <input type="telefone" class="form-control" id="exampleInputTelefone" aria-describedby="telefoneHelp">
+                    </div>
+                    <div class="form-group">                        
+                        <a href="#" class="text-secondary">Esqueseu a Senha?</a>
+                    </div>
+                    <div class="form-group">                        
+                        <a href="#" class="text-secondary" (click)="registerUser()">Cadastre-se aqui!</a>                        
+                    </div>
+                    <div class="form-group">                        
+                        <button type="submit" class="btn btn-dark bg-secondary col-12">Acessar</button>
+                    </div>
+                    <!--div class="form-group">
+                        
+                        IMPORTANTE
+                        http://www.fabricadecodigo.com/como-criar-um-aplicativo-com-firebase-realtime-database-e-angular/                  
+
+
+                        <button class="col-12" mat-button style="padding: 1rem;" (click)="signInWithGoogle()">
+                            <mat-icon style="width: 50px; height:30px"
+                                      svgIcon="logo"></mat-icon>Google
+                          </button><hr>
+                    </div-->
+                </form>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="Registring"><app-register-user></app-register-user></div>
+
+<div *ngIf="loggedIn">
+    <input type="text" id="user" [value]="loggedIn" readonly >
+    <h1>{{user.firstName}}</h1>
+    <!-- chamada do Json de retorno do Google API -->
+    <img class="img-responsive center-block" src="{{user.photoUrl}}" alt="">
+    <input type="text" id="id" [value]="user.id" readonly >
+    <input type="text" id="name" [value]="user.firstName" readonly >
+    <input type="text" id="lastname" [value]="user.lastName" readonly >
+    <input type="text" id="email2" [value]="user.email" readonly >
+    <button class="btn btn-dark bg-secondary" (click)="signOut()">SignOut</button>
+</div>
+

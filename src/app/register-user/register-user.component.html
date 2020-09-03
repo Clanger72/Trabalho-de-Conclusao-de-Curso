@@ -1,0 +1,38 @@
+<div class="container-fluid"  *ngIf="! loggedIn">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="center-block col-md-4">
+            <div class="jumbotron bg-light">
+                <form action="register-user.component.ts">
+                    <div class="form-group">
+                        <label for="firstName">Nome Completo:</label>
+                        <input type="name" class="form-control" id="firstName" aria-describedby="Informe seu nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail:</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="Informe seu e-mail">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone">Telefone:</label>
+                        <input type="telefone" class="form-control" id="telefone" aria-describedby="Informe seu telefone">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Senha:</label>
+                        <input type="password" class="form-control" id="password" aria-describedby="Insira uma senha.">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Confirme a Senha:</label>
+                        <input type="password" class="form-control" id="password" aria-describedby="Insira a senha novamente.">
+                    </div>
+                    <div class="form-group">                        
+                        <button type="submit" class="btn btn-dark bg-secondary col-12" (click)="save()">Criar Conta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="loggedIn">
+    <app-home-user></app-home-user>
+</div>

@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "assinante-b9780": {
+      "hosting": {
+        "App-Assinantes": [
+          "assinante-b9780"
+        ]
+      }
+    }
+  }
+}

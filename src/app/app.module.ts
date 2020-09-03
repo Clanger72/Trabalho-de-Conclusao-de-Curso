@@ -3,49 +3,60 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PoModule } from '@po-ui/ng-components';
+import { RouterModule } from '@angular/router';
+import { PoTemplatesModule } from '@po-ui/ng-templates';
+import { SamplePoPageLoginLabsComponent } from './sample-po-page-login-labs/sample-po-page-login-labs.component';
+
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule, MatIconModule } from '@angular/material';
-import { PoModule } from '@portinari/portinari-ui';
-import { ContractPageComponent } from './contract-page/contract-page.component';
-import { SocialLoginModule, AuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
-const config = new AuthServiceConfig([
-  {
-    id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider("692684324047-cf1sjja4cd3qi0gvbolba5r87gto1s6l.apps.googleusercontent.com")
-  },
-  {
-    id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider('-4KBhJjPDMOxSV8vS1Oy9h6K')
-  }
-]);
+import { SocialLoginModule, SocialAuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 
-export function provideConfig() {
-  return config;
-}
+import { LoginComponent } from './login/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RegisterUserComponent } from './register-user/register-user.component';
+import { HomeUserComponent } from './home-user/home-user.component';
+import { DependentUserComponent } from './dependent-user/dependent-user.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ContractPageComponent
+    SamplePoPageLoginLabsComponent,
+    LoginComponent,
+    RegisterUserComponent,
+    HomeUserComponent,
+    DependentUserComponent,
+    UserProfileComponent
   ],
   imports: [
     MatIconModule, 
     MatButtonModule, 
+    BrowserModule,
     FormsModule,
     HttpClientModule,
-    BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     PoModule,
+    RouterModule.forRoot([]),
+    PoTemplatesModule,
+    BrowserAnimationsModule,
     SocialLoginModule
   ],
   providers: [
     {
-      provide: AuthServiceConfig,
-      useFactory: provideConfig
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('692684324047-g9jbrknr1k83neakhjb1eeei4j4249rr.apps.googleusercontent.com')
+          }
+        ],
+      } as SocialAuthServiceConfig,
     }
   ],
   bootstrap: [AppComponent]
