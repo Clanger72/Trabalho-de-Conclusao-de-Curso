@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-dependent-user',
@@ -9,13 +9,21 @@ export class DependentUserComponent implements OnInit {
 
   newDependent: boolean = false;
 
+  @Input() lDependent: boolean = false;
+  @Input() lEdit: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  createDependent(): void{
+  createNewDependent(): void{
+    console.log("lDependent", this.lDependent, "lEdit", this.lEdit);
     this.newDependent = true;
+  }
+
+  backToList(): void{
+    this.newDependent = false;
   }
 
 }

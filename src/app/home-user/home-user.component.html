@@ -16,15 +16,15 @@
             <div class="list-group list-group-flush">
               <a href="#" class="list-group-item list-group-item-action bg-light text-center">Assinar</a>
               <a href="#" class="list-group-item list-group-item-action bg-light text-center" (click)="dependent()">Dependente</a>
-              <a href="#" class="list-group-item list-group-item-action bg-light text-center" (click)="userProfile()">Perfil</a>
+              <a href="#" class="list-group-item list-group-item-action bg-light text-center" (click)="userProfile()">Editar Perfil</a>
               <a href="#" class="list-group-item list-group-item-action bg-light text-center">Sair</a>
             </div>
         </div>
-        <div *ngIf="createDependent" class="col-md-10" editProfile="false">
-            <app-dependent-user></app-dependent-user>
+        <div *ngIf="createDependent && ! editProfile" class="col-md-10">
+            <app-dependent-user [lDependent]=createDependent [lEdit]=editProfile></app-dependent-user>
         </div>
-        <div *ngIf="editProfile" class="col-md-10" createDependent="false">
-            <app-user-profile></app-user-profile>
+        <div *ngIf="editProfile && ! createDependent" class="col-md-10" createDependent="false">
+            <app-user-profile [lDependent]=createDependent [lEdit]=editProfile></app-user-profile>
         </div>
     </div>
 </div>
