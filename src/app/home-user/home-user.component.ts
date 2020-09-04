@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { EventEmitter } from 'protractor';
 
 @Component({
@@ -8,10 +8,9 @@ import { EventEmitter } from 'protractor';
 })
 export class HomeUserComponent implements OnInit {
 
-  @Input() createDependent: boolean = false;
-  @Input() editProfile: boolean = false;
+  @Output() createDependent: boolean = false;
+  @Output() editProfile: boolean = false;
 
-  //changeValue = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
@@ -19,11 +18,12 @@ export class HomeUserComponent implements OnInit {
 
   dependent(): void{
     this.createDependent = true;
-    //(this.changeValue.emit({changeValue: this.createDependent});
+    this.editProfile = false
   }
 
   userProfile(): void{
     this.editProfile = true;
+    this.createDependent = false;
   }
 
 }

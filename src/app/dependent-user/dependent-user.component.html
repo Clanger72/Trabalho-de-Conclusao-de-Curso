@@ -38,7 +38,7 @@
           </table>
           <div class="col-md-5"></div>
           <div class="col-md-5"> 
-            <button class="col-md-2" mat-button style="padding: 0rem;" title="Criar novo dependente" (click)="createDependent()">
+            <button class="col-md-2" mat-button style="padding: 0rem;" title="Criar novo dependente" (click)="createNewDependent()">
                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                     width="32" height="32"
                     viewBox="0 0 32 32"
@@ -150,10 +150,11 @@
                     <br />
                     
                     <div class="row">
-                        <div class="col-xs-12 col-md-12 form-group">
+                        <div class="col-xs-8 col-md-10 form-group">
                             <button class="btn btn-primary pull-right" type="submit">Salvar</button>
-                            <button class="btn btn-primary pull-right" type="submit">Limpar</button>
-                            <!--<button class="btn btn-primary pull-right" type="submit">Enviar</button>-->
+                        </div>
+                        <div class="col-xs-4 col-md-2 form-group">
+                            <button class="btn btn-primary pull-right" type="submit" (click)="backToList()">Voltar</button>
                         </div>
                     </div>
                 </form>
