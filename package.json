@@ -27,7 +27,7 @@
     "angularx-social-login": "^3.2.1",
     "bootstrap": "^4.5.0",
     "brmasker-ionic-3": "^1.6.3",
-    "firebase": "^7.13.1",
+    "firebase": "^7.19.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

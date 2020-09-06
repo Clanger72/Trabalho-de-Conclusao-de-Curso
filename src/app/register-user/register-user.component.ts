@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { IRegisterUser, RegisterUser } from '../shared/model/register-user.model';
-import { RegisterUserService } from '../shared/services/register-user.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { RegisterUser } from '../shared/model/register-user.model'
+import { RegisterUserService } from '../shared/services/register-user.service'
 
 
 @Component({
@@ -12,30 +12,66 @@ import { Router } from '@angular/router';
 })
 export class RegisterUserComponent implements OnInit {
 
-registerUser: IRegisterUser = new RegisterUser();
+  registerUsers: RegisterUser[];
 
   id: number;
   router: Router;
   loggedIn: boolean = false; 
+
+  userId: number = 1;
+  userNome: string;
+  userEmail: string;
+  userTelefone: string;
+  userPassword: string;
+  userPasswordCheck: string;
+
   constructor(router: Router,
-              private serviceRegisterUser: RegisterUserService,
-              private activatedRoute: ActivatedRoute) {
-                this.router = router;
+              private activatedRoute: ActivatedRoute,
+              private registerUserService: RegisterUserService) {
+              this.router = router;
                }
 
-  ngOnInit(): void {
-  }
-  //esse metodo é para consultar
-  private get(){
-    this.id = parseInt(this.activatedRoute.snapshot.paramMap.get('codClient'));
-    if(this.id){
-      this.serviceRegisterUser.get(this.id).subscribe((item: IRegisterUser) => {
-        this.registerUser = item;
-      })
-    }
+  ngOnInit() {
+    
   }
 
-  
+  create(){
+    alert("Clicou em Salvar");
+    if(this.userPassword == this.userPasswordCheck){
+      console.log(this.userNome);
+    let Record = {};
+    Record['id'] = this.userId;
+    Record['name'] = this.userNome;
+    Record['email'] = this.userEmail;
+    Record['telefone'] = this.userTelefone;
+    Record['password'] = this.userPassword;
+
+    this.registerUserService.createUser(Record).then(res =>{
+      this.userId = undefined;
+      this.userNome = "";
+      this.userEmail = "";
+      this.userTelefone = "";
+      this.userPassword = "";
+      this.userPasswordCheck = "";
+      console.log('Salvo', res);
+    }).catch(error =>{
+      console.log(error);
+    });
+    }else{
+      alert("A senha de confirmação deve ser igual a primeira digitada!");
+      this.userPassword = "";
+      this.userPasswordCheck = "";
+    }
+    
+  }
+
+  update(registerUsers: RegisterUser) {
+    this.registerUserService.updateUser(registerUsers);
+  }
+
+  delete(id: string) {
+    this.registerUserService.deleteUser(id);
+  }
 
   //metodo para salvar o registro
   save(): void{

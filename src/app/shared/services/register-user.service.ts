@@ -1,32 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { IRegisterUser } from '../model/register-user.model';
-import { Observable } from 'rxjs';
-
+import { AngularFirestore } from '@angular/fire/firestore';
+import { RegisterUser } from '../model/register-user.model'
 
 @Injectable({
   providedIn: 'root'
 })
-
-//Procurar por api para comunicação via http.
 export class RegisterUserService {
-  //Video top para firebase
-  //https://www.youtube.com/watch?v=YDNJ_lQuYeY
-  //Incluir URL da api http
-  private apiUrl = '';
-  constructor(private http:HttpClient) { }
 
-  create(model: IRegisterUser): Observable<IRegisterUser>{
-    return this.http.post<IRegisterUser>(`${this.apiUrl}`,model);
+  constructor(private firestore: AngularFirestore) { }
+
+  getUser() {
+    return this.firestore.collection('user').snapshotChanges();
   }
-  update(model: IRegisterUser): Observable<IRegisterUser>{
-    return this.http.put<IRegisterUser>(`${this.apiUrl}/${model.codClient}`,model);
+
+  createUser(Record){
+    return this.firestore.collection('user').add(Record);
   }
-  get(codClient: number): Observable<IRegisterUser>{
-    return this.http.get<IRegisterUser>(`${this.apiUrl}/${codClient}`);
+
+  updateUser(registerUser: RegisterUser){
+    delete registerUser.id;
+    this.firestore.doc('user/' + registerUser.id).update(registerUser);
   }
-  delete(codClient: number): Observable<any>{
-    return this.http.delete(`${this.apiUrl}/${codClient}`);
+
+  deleteUser(registerUserId: string){
+    this.firestore.doc('user/' + registerUserId).delete();
   }
-  
 }

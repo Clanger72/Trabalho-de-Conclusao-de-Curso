@@ -3,29 +3,29 @@
         <div class="col-md-4"></div>
         <div class="center-block col-md-4">
             <div class="jumbotron bg-light">
-                <form action="register-user.component.ts">
+                <form action="register-user.component.ts"> 
                     <div class="form-group">
                         <label for="firstName">Nome Completo:</label>
-                        <input type="name" class="form-control" id="firstName" aria-describedby="Informe seu nome">
+                        <input type="name" name="userNome" class="form-control" id="firstName" required [(ngModel)]="userNome" placeholder="Informe seu nome">
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail:</label>
-                        <input type="email" class="form-control" id="email" aria-describedby="Informe seu e-mail">
+                        <input type="email" name="userEmail" class="form-control" id="email" required [(ngModel)]="userEmail" placeholder="Informe seu e-mail">
                     </div>
                     <div class="form-group">
                         <label for="telefone">Telefone:</label>
-                        <input type="telefone" class="form-control" id="telefone" aria-describedby="Informe seu telefone">
+                        <input type="telefone" name="userTelefone" class="form-control" id="telefone" required [(ngModel)]="userTelefone" placeholder="Informe seu telefone">
                     </div>
                     <div class="form-group">
                         <label for="password">Senha:</label>
-                        <input type="password" class="form-control" id="password" aria-describedby="Insira uma senha.">
+                        <input type="password" name="userPassword" class="form-control" id="password" required [(ngModel)]="userPassword" placeholder="Insira uma senha.">
                     </div>
                     <div class="form-group">
-                        <label for="password">Confirme a Senha:</label>
-                        <input type="password" class="form-control" id="password" aria-describedby="Insira a senha novamente.">
+                        <label for="check-password">Confirme a Senha:</label>
+                        <input type="password" class="form-control" name="userPasswordCheck" id="check-password" required [(ngModel)]="userPasswordCheck" placeholder="Insira a senha novamente.">
                     </div>
                     <div class="form-group">                        
-                        <button type="submit" class="btn btn-dark bg-secondary col-12" (click)="save()">Criar Conta</button>
+                        <button type="submit" class="btn btn-dark bg-secondary col-12" (click)="create()" [disabled]="!userNome || !userEmail || !userTelefone || !userPassword || !userPasswordCheck">Criar Conta</button>
                     </div>
                 </form>
             </div>
