@@ -13,6 +13,13 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { environment } from '../environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
+import { RegisterUserService } from './shared/services/register-user.service'
+
 import { SocialLoginModule, SocialAuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 
 import { LoginComponent } from './login/login.component';
@@ -33,6 +40,9 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     UserProfileComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFirestoreModule,
     MatIconModule, 
     MatButtonModule, 
     BrowserModule,
@@ -46,6 +56,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     SocialLoginModule
   ],
   providers: [
+    RegisterUserService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
