@@ -3,7 +3,7 @@
         <div class="col-md-4"></div>
         <div class="center-block col-md-4">
             <div class="jumbotron bg-light">
-                <form action="register-user.component.ts"> 
+                <form action="register-user.component.ts" (ngSubmit)="create()"> 
                     <div class="form-group">
                         <label for="firstName">Nome Completo:</label>
                         <input type="name" name="userNome" class="form-control" id="firstName" required [(ngModel)]="userNome" placeholder="Informe seu nome">
@@ -24,8 +24,14 @@
                         <label for="check-password">Confirme a Senha:</label>
                         <input type="password" class="form-control" name="userPasswordCheck" id="check-password" required [(ngModel)]="userPasswordCheck" placeholder="Insira a senha novamente.">
                     </div>
-                    <div class="form-group">                        
-                        <button type="submit" class="btn btn-dark bg-secondary col-12" (click)="create()" [disabled]="!userNome || !userEmail || !userTelefone || !userPassword || !userPasswordCheck">Criar Conta</button>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-dark bg-secondary col-12" [disabled]="!userNome || !userEmail || !userTelefone || !userPassword || !userPasswordCheck">Criar Conta</button>
+                    </div>
+                    <div class="form-group">
+                        <p *ngIf="errorMessage.length > 0" class="text-danger">{{errorMessage}}</p>
+                    </div>
+                    <div class="form-group">
+                        <p *ngIf="SuccessMessage.length > 0" class="text-success">{{SuccessMessage}}</p>
                     </div>
                 </form>
             </div>
@@ -33,6 +39,7 @@
     </div>
 </div>
 
-<div *ngIf="loggedIn">
+<!--div *ngIf="loggedIn">
+     [disabled]="!userNome || !userEmail || !userTelefone || !userPassword || !userPasswordCheck"
     <app-home-user></app-home-user>
-</div>
+</div-->

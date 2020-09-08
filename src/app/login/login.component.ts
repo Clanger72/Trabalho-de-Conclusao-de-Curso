@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
-import { SocialAuthService , GoogleLoginProvider, SocialUser } from 'angularx-social-login';
-import { DomSanitizer } from '@angular/platform-browser';
-import { HttpClient } from '@angular/common/http';
-import { Template } from '@angular/compiler/src/render3/r3_ast';
+import { RegisterUserService } from '../shared/services/register-user.service'
+import { Router } from '@angular/router';
+import { LoginService } from '../shared/services/login.service'
 
-const googleLogoURL = 
-"https://raw.githubusercontent.com/fireflysemantics/logo/master/Google.svg";
+
 
 @Component({
   selector: 'app-login',
@@ -15,37 +13,34 @@ const googleLogoURL =
 })
 export class LoginComponent implements OnInit {
 
-  user: SocialUser;
-  loggedIn: boolean = false; 
   Registring: boolean = false;
 
+  @Output() loginEmail = "";
+  @Output() loginPassword = "";
+  loginUser: void[];
+
+  SuccessMessage = "";
+  errorMessage = "";
+  error: {name:string, message:string} = {name: "", message: ""};
+
   constructor (
-    private authService: SocialAuthService,
+    private registerUserService: RegisterUserService,
+    private loginService: LoginService,
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer) {
-          this.matIconRegistry.addSvgIcon(
-      "logo",
-      this.domSanitizer.bypassSecurityTrustResourceUrl(googleLogoURL));
-    }
+    private router: Router)
+    {}
 
   ngOnInit() {
-      this.authService.authState.subscribe((user) => {
-      this.user = user;
-      this.loggedIn = (user != null);
-      console.log('this.user', this.user, 'this.loggedIn ', this.loggedIn );
-    });
   }
 
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  login(){
+   this.loginService.login(this.loginEmail, this.loginPassword).then(res =>{
+     this.router.navigate(['home']);
+     this.SuccessMessage = "Logado com sucesso";
+   }, err=>{
+     this.router.navigate(['login']);
+     this.errorMessage = err.message;
+     this.SuccessMessage = "";
+   })
   }
-
-  signOut(): void {
-    this.authService.signOut();
-  }
-
-  registerUser(): void {
-    this.Registring = true;
-  }
-
 }
