@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
-import { EventEmitter } from 'protractor';
+import { Component, OnInit, Output } from '@angular/core';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-home-user',
@@ -10,10 +10,13 @@ export class HomeUserComponent implements OnInit {
 
   @Output() createDependent: boolean = false;
   @Output() editProfile: boolean = false;
+  userEmail: string;
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    var user = firebase.auth().currentUser;
+    this.userEmail = user.email;
   }
 
   dependent(): void{

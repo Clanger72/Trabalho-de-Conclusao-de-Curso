@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PoModule } from '@po-ui/ng-components';
 import { RouterModule } from '@angular/router';
-import { PoTemplatesModule } from '@po-ui/ng-templates';
-import { SamplePoPageLoginLabsComponent } from './sample-po-page-login-labs/sample-po-page-login-labs.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -17,10 +15,10 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
-import { RegisterUserService } from './shared/services/register-user.service'
+import { RegisterUserService } from './shared/services/register-user.service';
 
-import { SocialLoginModule, SocialAuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,21 +26,23 @@ import { RegisterUserComponent } from './register-user/register-user.component';
 import { HomeUserComponent } from './home-user/home-user.component';
 import { DependentUserComponent } from './dependent-user/dependent-user.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SamplePoPageLoginLabsComponent,
     LoginComponent,
     RegisterUserComponent,
     HomeUserComponent,
     DependentUserComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    VerifyEmailComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFirestoreModule,
+    AngularFireAuthModule,
     MatIconModule, 
     MatButtonModule, 
     BrowserModule,
@@ -51,24 +51,10 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     AppRoutingModule,
     PoModule,
     RouterModule.forRoot([]),
-    PoTemplatesModule,
     BrowserAnimationsModule,
-    SocialLoginModule
   ],
   providers: [
-    RegisterUserService,
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider('692684324047-g9jbrknr1k83neakhjb1eeei4j4249rr.apps.googleusercontent.com')
-          }
-        ],
-      } as SocialAuthServiceConfig,
-    }
+    RegisterUserService
   ],
   bootstrap: [AppComponent]
 })
