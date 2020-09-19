@@ -3,9 +3,7 @@
         <nav class="navbar navbar-light bg-light col-md-12 border-bottom">
             <a class="navbar-brand" href="#">Assinantes</a>
             <form class="form-inline my-2 my-lg-0">
-                <div *ngIf="userEmail.length > 0">
-                    <h5>{{userEmail}}</h5>
-                </div>
+                    <h5>{{userName}}</h5>
             </form>
         </nav>
         <hr>
@@ -19,7 +17,7 @@
               <a href="#" class="list-group-item list-group-item-action bg-light text-center">Assinar</a>
               <a class="list-group-item list-group-item-action bg-light text-center" (click)="dependent()">Dependente</a>
               <a class="list-group-item list-group-item-action bg-light text-center" (click)="userProfile()">Editar Perfil</a>
-              <a href="#" routerLink="/login" class="list-group-item list-group-item-action bg-light text-center">Sair</a>
+              <a href="#" class="list-group-item list-group-item-action bg-light text-center" (click)="logout()">Sair</a>
             </div>
         </div>
         <div *ngIf="createDependent && ! editProfile" class="col-md-10">

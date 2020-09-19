@@ -13,7 +13,7 @@
                         <input type="password" name="loginPassword" required [(ngModel)]="loginPassword" class="form-control" id="exampleInputPassword1" placeholder="Senha">
                     </div>
                     <div class="form-group">                        
-                        <a href="#" class="text-secondary">Esqueseu a Senha?</a>
+                        <a href="#" class="text-secondary" (click)="ResetPassword()">Esqueseu a Senha?</a>
                     </div>
                     <div class="form-group">                        
                         <a href="#" routerLink="/register" class="text-secondary">Cadastre-se aqui!</a>                        

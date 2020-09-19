@@ -1,40 +1,42 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone  } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { User } from 'firebase';
 import * as firebase from 'firebase';
-
-
+import { UserModel } from '../model/user';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class LoginService {
 
-  authState: any = null;
-  user: User;
+  userData: any;
 
   constructor(
     public afs: AngularFirestore,
-    private afu: AngularFireAuth, 
-    private router: Router ) {
+    private afu: AngularFireAuth,
+    private router: Router,
+    private ngZone: NgZone) {
     this.afu.authState.subscribe(user =>{
         if(user){
-            this.user = user;
-            localStorage.setItem('user', JSON.stringify(this.user));
+            this.userData = user;
+            localStorage.setItem('user', JSON.stringify(this.userData));
+            JSON.parse(localStorage.getItem('user'));
         }else{
             localStorage.setItem('user', null);
+            JSON.parse(localStorage.getItem('user'));
         }
-    }) 
+    })
   }
 
   doRegister(loginEmail, loginPassword){
     return new Promise<any>((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(loginEmail, loginPassword).then(res => {
-        this.sendEmailVerification();
+        const actionCodeSettings = {url: 'https://www.example.com/?email=' + firebase.auth().currentUser.email};
+        this.sendEmailVerification(actionCodeSettings);
+        this.SetUserData(res.user);
         resolve(res);
-        // this.SetUserData(res.user);
       },err => reject(err))
     })
   }
@@ -44,28 +46,43 @@ export class LoginService {
       this.router.navigate(['home']);
   }
 
-  async register(email: string, password: string){
-      var result = await this.afu.createUserWithEmailAndPassword(email, password)
-      this.router.navigate(['home']);
-  }
-
-  async sendEmailVerification(){
-      await (await this.afu.currentUser).sendEmailVerification()
-      this.router.navigate(['verifyEmail']);
+  async sendEmailVerification(actionCodeSettings: any): Promise<void>{
+    return (await this.afu.currentUser).sendEmailVerification().then(() =>{
+      this.router.navigate(['VerifyEmail']);
+    })
   }
 
   async sendPasswordResetEmail(passwordResetEmail: string){
-    return await this.afu.sendPasswordResetEmail(passwordResetEmail);
+    return await this.afu.sendPasswordResetEmail(passwordResetEmail).then(res => {
+      window.alert('Email de redefinição de senha enviado, verifique sua caixa de entrada');
+    }).catch((error) => {
+      window.alert(error);
+    })
+  }
+
+  get isLoggedIn():boolean {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return (user !== null && user.emailVerified !== false) ? true : false;
+}
+
+  SetUserData(user) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`user/${user.uid}`);
+
+    const userData: UserModel = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified
+    }
+    return userRef.set(userData, {
+      merge: true
+    })
   }
 
   async logout(){
       await this.afu.signOut();
       localStorage.removeItem('user');
       this.router.navigate(['login'])
-  }
-
-  get isLoggedIn():boolean {
-      const user = JSON.parse(localStorage.getItem('user'));
-      return (user !== null && user.emailVerified !== false) ? true : false;
   }
 }

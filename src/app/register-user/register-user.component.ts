@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { RegisterUser } from '../shared/model/register-user.model';
 import { RegisterUserService } from '../shared/services/register-user.service';
 import { LoginService } from '../shared/services/login.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+
 
 @Component({
   selector: 'app-register-user',
@@ -11,23 +13,28 @@ import { LoginService } from '../shared/services/login.service';
 })
 export class RegisterUserComponent implements OnInit {
 
-  loggedIn: boolean = false; 
-  userNome: string;
-  userEmail: string;
-  userTelefone: string;
-  userPassword: string;
-  userPasswordCheck: string;
+  password: string;
+  passwordCheck: string;
   errorMessage = "";
   SuccessMessage = "";
   error: {name:string, message:string} = {name: "", message: ""};
+  registerUsers: RegisterUser[];
 
   constructor(private router: Router,
               private loginService: LoginService,
-              private registerUserService: RegisterUserService) {
+              private registerUserService: RegisterUserService,
+              public registerUser: RegisterUser,
+              private afu: AngularFireAuth) {
                }
 
   ngOnInit() {
-    
+    this.registerUserService.getUser().subscribe(data =>{
+      this.registerUsers = data.map(e =>{
+        const data = e.payload.doc.data() as RegisterUser;
+        const id = e.payload.doc.id;
+        return { id, ...data };
+      })
+    });
   }
 
   clearErrorMessage(){
@@ -35,30 +42,32 @@ export class RegisterUserComponent implements OnInit {
     this.SuccessMessage = "";
   }
 
-  create(){
+  create(registerUser: RegisterUser){
+
     this.clearErrorMessage();
 
-    this.loginService.doRegister(this.userEmail, this.userPassword).then(_res => {
-        let Record = {};
-        Record['name'] = this.userNome;
-        Record['email'] = this.userEmail;
-        Record['telefone'] = this.userTelefone;
-        Record['password'] = this.userPassword;
-        this.loggedIn = true;
+    this.loginService.doRegister(this.registerUser.email, this.password).then(async _res => {
+      let user = await this.afu.currentUser;
 
-        this.registerUserService.createUser(Record).then(_res =>{
-        this.userNome = "";
-        this.userEmail = "";
-        this.userTelefone = "";
-        this.userPassword = "";
-        this.userPasswordCheck = "";
-        }).catch(error =>{
-          console.log(error);
-        });
+      registerUser = {
+        id: user.uid,
+        email: user.email,
+        emailVerified: user.emailVerified,
+        nome: registerUser.nome,
+        cpf: registerUser.cpf,
+        dtBirth: registerUser.dtBirth,
+        telefone: registerUser.telefone,
+        cep: registerUser.cep,
+        street: registerUser.street,
+        number: registerUser.number,
+        city: registerUser.city,
+        state: registerUser.state
+      }
 
-        this.router.navigate(['home'])
-        this.errorMessage = "";
-        this.SuccessMessage = "Sua conta foi criada";
+      this.registerUserService.updateUser(registerUser);
+
+      this.errorMessage = "";
+      this.SuccessMessage = "Sua conta foi criada";
 
     }, err => {
       console.log(err);
@@ -66,13 +75,4 @@ export class RegisterUserComponent implements OnInit {
       this.SuccessMessage = "";
     })
   }
-
-  update(registerUsers: RegisterUser) {
-    this.registerUserService.updateUser(registerUsers);
-  }
-
-  delete(id: string) {
-    this.registerUserService.deleteUser(id);
-  }
-
 }
