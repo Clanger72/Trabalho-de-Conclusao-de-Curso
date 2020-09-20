@@ -43,4 +43,8 @@ export class LoginComponent implements OnInit {
      this.SuccessMessage = "";
    })
   }
+
+  ResetPassword(){
+    this.loginService.sendPasswordResetEmail(this.loginEmail);
+  }
 }

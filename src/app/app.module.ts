@@ -18,7 +18,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { RegisterUserService } from './shared/services/register-user.service';
-
+import { RegisterUser } from './shared/model/register-user.model';
 
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,15 +36,15 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
     HomeUserComponent,
     DependentUserComponent,
     UserProfileComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
-    MatIconModule, 
-    MatButtonModule, 
+    MatIconModule,
+    MatButtonModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
@@ -54,7 +54,8 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
     BrowserAnimationsModule,
   ],
   providers: [
-    RegisterUserService
+    RegisterUserService,
+    RegisterUser
   ],
   bootstrap: [AppComponent]
 })

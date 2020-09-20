@@ -13,7 +13,7 @@ export class RegisterUserService {
   authState: any = null;
 
   constructor(private firestore: AngularFirestore,
-              private afu: AngularFireAuth, 
+              private afu: AngularFireAuth,
               private router: Router) {
                 this.afu.authState.subscribe((auth =>{
                   this.authState = auth;
@@ -34,13 +34,12 @@ export class RegisterUserService {
     return this.firestore.collection('user').snapshotChanges();
   }
 
-  createUser(Record){
-    return this.firestore.collection('user').add(Record);
+  createUser(registerUser: RegisterUser){
+    return this.firestore.collection('user/').add(registerUser);
   }
 
   updateUser(registerUser: RegisterUser){
-    delete registerUser.id;
-    this.firestore.doc('user/' + registerUser.id).update(registerUser);
+    this.firestore.doc(`user/${registerUser.id}`).update(registerUser);
   }
 
   deleteUser(registerUserId: string){
