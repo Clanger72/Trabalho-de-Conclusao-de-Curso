@@ -1,18 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../shared/services/login.service';
+import { Router } from '@angular/router';
+
+
 @Component({
   selector: 'app-verify-email',
   templateUrl: './verify-email.component.html',
   styleUrls: ['./verify-email.component.css']
 })
 export class VerifyEmailComponent implements OnInit {
-//validação de e-mail
-//https://www.positronx.io/full-angular-7-firebase-authentication-system/
-//https://firebase.google.com/docs/auth/web/manage-users?hl=pt-br
 
-  constructor(public loginService: LoginService) { }
+  constructor(public loginService: LoginService,
+              public router: Router) { }
 
   ngOnInit(): void {
+
+  }
+
+  resentEmail(user){
+    this.loginService.sendEmailVerification(user);
+  }
+
+  reload(){
+    this.router.navigate(['login']).then(() => location.reload());
   }
 
 }

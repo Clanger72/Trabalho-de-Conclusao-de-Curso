@@ -45,7 +45,6 @@ export class RegisterUserComponent implements OnInit {
   create(registerUser: RegisterUser){
 
     this.clearErrorMessage();
-
     this.loginService.doRegister(this.registerUser.email, this.password).then(async _res => {
       let user = await this.afu.currentUser;
 
@@ -63,7 +62,6 @@ export class RegisterUserComponent implements OnInit {
         city: registerUser.city,
         state: registerUser.state
       }
-
       this.registerUserService.updateUser(registerUser);
 
       this.errorMessage = "";

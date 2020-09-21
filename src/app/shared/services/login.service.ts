@@ -42,8 +42,7 @@ export class LoginService {
   }
 
   async login(email: string, password: string ){
-      var result = await this.afu.signInWithEmailAndPassword(email, password)
-      this.router.navigate(['home']);
+      var result = await this.afu.signInWithEmailAndPassword(email, password);
   }
 
   async sendEmailVerification(actionCodeSettings: any): Promise<void>{
@@ -58,6 +57,11 @@ export class LoginService {
     }).catch((error) => {
       window.alert(error);
     })
+  }
+
+  get confirmation():boolean{
+    const user = JSON.parse(localStorage.getItem('user'));
+    return (user.emailVerified !== false) ? true : false;
   }
 
   get isLoggedIn():boolean {

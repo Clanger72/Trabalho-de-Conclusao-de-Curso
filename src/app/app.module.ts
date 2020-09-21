@@ -19,6 +19,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { RegisterUserService } from './shared/services/register-user.service';
 import { RegisterUser } from './shared/model/register-user.model';
+import { DependentService } from './shared/services/dependent.service';
+import { DependentData } from './shared/model/dependent-data';
 
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,6 +29,7 @@ import { HomeUserComponent } from './home-user/home-user.component';
 import { DependentUserComponent } from './dependent-user/dependent-user.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { ContractSignatureComponent } from './contract-signature/contract-signature.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,7 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
     DependentUserComponent,
     UserProfileComponent,
     VerifyEmailComponent,
+    ContractSignatureComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -55,7 +59,9 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
   ],
   providers: [
     RegisterUserService,
-    RegisterUser
+    RegisterUser,
+    DependentService,
+    DependentData
   ],
   bootstrap: [AppComponent]
 })
