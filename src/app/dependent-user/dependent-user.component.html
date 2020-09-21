@@ -10,23 +10,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Alice</td>
-                <td>Mãe</td>
-                <td>05/03/2010</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Matheus</td>
-                <td>Mãe</td>
-                <td>10/05/2014</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Gabriela</td>
-                <td>Responsável Legal</td>
-                <td>29/07/2008</td>
+              <tr *ngFor="let dependentData of dependentDatas; let count = index">
+                <th scope="row">{{count}}</th>
+                <td>{{dependentData.nome}}</td>
+                <td>{{dependentData.typeParent}}</td>
+                <td>{{dependentData.dtBirth}}</td>
               </tr>
               <tr>
                 <th></th>
@@ -38,7 +26,7 @@
           </table>
           <div class="col-md-5"></div>
           <div class="col-md-5">
-            <button class="col-md-2" mat-button style="padding: 0rem;" title="Criar novo dependente" (click)="createNewDependent()">
+            <button class="col-md-2" mat-button style="padding: 0rem;" title="Criar novo dependente" (click)="cadastro()">
                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                     width="32" height="32"
                     viewBox="0 0 32 32"
@@ -59,27 +47,27 @@
       <div class="container">
         <div class="row">
             <div class="col-sm-8 contact-form">
-                <form id="contact" method="post" class="form" role="form">
+                <form id="contact" method="post" class="form" role="form"  (ngSubmit)="createNewDependent(dependentData)">
                     <div class="row">
                         <div class="col-xs-6 col-md-3 form-group">
-                            <label for="inputCPF">CPF</label>
-                            <input class="form-control" id="inputCPF" name="CPF" placeholder="000.000.000-00" type="text" required autofocus />
+                            <label for="cpf">CPF</label>
+                            <input class="form-control" id="cpf" name="cpf" [(ngModel)]="dependentData.cpf" placeholder="000.000.000-00" type="text" required autofocus />
                         </div>
                         <div class="col-xs-4 col-md-9 form-group">
                             <label for="inputname">Nome</label>
-                            <input class="form-control" id="inputname" name="nome" placeholder="Nome Completo" type="cpf" />
+                            <input class="form-control" id="inputname" name="nome" [(ngModel)]="dependentData.nome" placeholder="Nome Completo" type="cpf" />
                         </div>
                         <div class="col-xs-6 col-md-3 form-group">
                             <label for="inputtelefone">Telefone</label>
-                            <input class="form-control" id="inputtelefone" name="telefone" placeholder="Telefone" type="text" />
+                            <input class="form-control" id="inputtelefone" name="telefone" [(ngModel)]="dependentData.telefone" placeholder="Telefone" type="text" />
                         </div>
                         <div class="col-xs-4 col-md-3 form-group">
                             <label for="inputDtBirth">Data de Nascimeto</label>
-                            <input class="form-control" id="inputDtBirth" name="Nascimento" type="date" />
+                            <input class="form-control" id="inputDtBirth" name="Nascimento" [(ngModel)]="dependentData.dtBirth" type="date" />
                         </div>
                         <div class="col-xs-4 col-md-3 form-group">
                             <label for="parentesco">Parentesco</label>
-                            <select class="form-control"id="parentesco" name="Parentesco" >
+                            <select class="form-control"id="parentesco" [(ngModel)]="dependentData.typeParent" name="Parentesco" >
                                 <option>Parentesco</option>
                                 <option>Pai</option>
                                 <option>Mãe</option>

@@ -5,20 +5,20 @@
             <div class="jumbotron bg-light">
                 <form (ngSubmit)="login()">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">E-mail</label>
-                        <input type="email" name="loginEmail" required [(ngModel)]="loginEmail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email@email.com.br">
+                        <label for="InputEmail">E-mail</label>
+                        <input type="email" name="loginEmail" required [(ngModel)]="loginEmail" class="form-control" id="exampleInputEmail1" placeholder="email@email.com.br">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Senha</label>
-                        <input type="password" name="loginPassword" required [(ngModel)]="loginPassword" class="form-control" id="exampleInputPassword1" placeholder="Senha">
+                        <label for="InputPassword">Senha</label>
+                        <input type="password" name="loginPassword" required [(ngModel)]="loginPassword" class="form-control" id="exampleInputPassword1" placeholder="******">
                     </div>
-                    <div class="form-group">                        
-                        <a href="#" class="text-secondary" (click)="ResetPassword()">Esqueseu a Senha?</a>
+                    <div class="form-group">
+                      <a href="#" class="text-secondary" (click)="ResetPassword()">Esqueseu a Senha?</a>
                     </div>
-                    <div class="form-group">                        
-                        <a href="#" routerLink="/register" class="text-secondary">Cadastre-se aqui!</a>                        
+                    <div class="form-group">
+                        <a href="#" routerLink="/register" class="text-secondary">Cadastre-se aqui!</a>
                     </div>
-                    <div class="form-group">                        
+                    <div class="form-group">
                         <button type="submit" class="btn btn-dark bg-secondary col-12" [disabled]="!loginEmail || !loginPassword">Acessar</button>
                     </div>
                     <div class="form-group">
@@ -26,6 +26,9 @@
                     </div>
                     <div class="form-group">
                         <p *ngIf="error.message.length > 0" class="text-danger">{{error.message}}</p>
+                    </div>
+                    <div class="form-group">
+                      <p *ngIf="SuccessMessage.length > 0" class="text-success">{{SuccessMessage}}</p>
                     </div>
                 </form>
             </div>

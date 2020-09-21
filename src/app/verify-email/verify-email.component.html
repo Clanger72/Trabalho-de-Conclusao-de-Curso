@@ -1,26 +1,30 @@
-<div class="displayTable">
-    <div class="displayTableCell">
-
-      <div class="authBlock">
-        <h3>Thank You for Registering</h3>
-
-        <div class="formGroup" *ngIf="loginService.userData as user">
-          <p class="text-center">We have sent a confirmation email to <strong>{{user.email}}</strong>.</p>
-          <p class="text-center">Please check your email and click on the link to verfiy your email address.</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="center-block col-md-4 mt-5">
+      <div class="jumbotron bg-light">
+        <div class="row">
+          <div class="center-block form-group" *ngIf="loginService.userData as user">
+            <p class="text-center">Nos enviamos um e-mail de confirmação para <strong>{{user.email}}</strong>.</p>
+            <hr>
+            <p class="text-center text-danger">Por favor verifique seu e mail e click no link para concluir seu cadastro.</p>
+          </div>
         </div>
-
-        <!-- <div class="formGroup">
-          <button type="button" class="btn btnPrimary" (click)="loginService.sendEmailVerification()"></button>
-            <i class="fas fa-redo-alt"></i>
-            Resend Verification Email
-          </button>
-        </div> -->
-
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-6 form-group"  *ngIf="loginService.userData as user">
+            <p class="text-center">Não rescebeu e-mail click em:</p>
+            <button type="button" class="btn btn-dark bg-secondary" (click)="resentEmail(user.email)">Renvio de e-mail</button>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4 form-group">
+            <button type="button" class="btn btn-dark bg-secondary" routerLink="/login" (click)="reload()">Sign in</button>
+          </div>
+        </div>
       </div>
-
-      <div class="redirectToLogin">
-        <span>Go back to?<span class="redirect" routerLink="/login"> Sign in</span></span>
-      </div>
-
     </div>
   </div>
+</div>
