@@ -33,8 +33,7 @@ export class LoginService {
   doRegister(loginEmail, loginPassword){
     return new Promise<any>((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(loginEmail, loginPassword).then(res => {
-        const actionCodeSettings = {url: 'https://www.example.com/?email=' + firebase.auth().currentUser.email};
-        this.sendEmailVerification(actionCodeSettings);
+        this.sendEmailVerification(firebase.auth().currentUser.email);
         this.SetUserData(res.user);
         resolve(res);
       },err => reject(err))
@@ -66,8 +65,8 @@ export class LoginService {
 
   get isLoggedIn():boolean {
     const user = JSON.parse(localStorage.getItem('user'));
-    return (user !== null && user.emailVerified !== false) ? true : false;
-}
+    return (user != null && user.emailVerified != false) ? true : false;
+  }
 
   SetUserData(user) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`user/${user.uid}`);

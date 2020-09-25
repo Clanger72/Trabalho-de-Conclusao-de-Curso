@@ -11,12 +11,21 @@ import { Router } from '@angular/router';
 export class RegisterUserService {
 
   authState: any = null;
+  userData: any;
 
   constructor(private firestore: AngularFirestore,
               private afu: AngularFireAuth,
               private router: Router) {
                 this.afu.authState.subscribe((auth =>{
                   this.authState = auth;
+                  if(auth){
+                    this.userData = auth;
+                    localStorage.setItem('user', JSON.stringify(this.userData));
+                    JSON.parse(localStorage.getItem('user'));
+                }else{
+                    localStorage.setItem('user', null);
+                    JSON.parse(localStorage.getItem('user'));
+                }
                 }))
     }
 
