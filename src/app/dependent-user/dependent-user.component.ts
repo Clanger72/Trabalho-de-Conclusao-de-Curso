@@ -16,7 +16,6 @@ export class DependentUserComponent implements OnInit {
 
   newDependent: boolean = false;
   userUid: any;
-  uidParent: any;
   registerUsers: RegisterUser[];
   dependentDatas: DependentData[];
 
@@ -30,12 +29,11 @@ export class DependentUserComponent implements OnInit {
               private afu: AngularFireAuth) { }
 
   ngOnInit(){
-
     this.service.getUser().subscribe(data =>{
       this.registerUsers = data.map(e =>{
         const data = e.payload.doc.data() as RegisterUser;
         const id = e.payload.doc.id;
-        this.userUid =  e.payload.doc.data()['uid'];
+        this.userUid =  e.payload.doc.data()['id'];
         return { id, ...data };
       })
     });
@@ -44,13 +42,7 @@ export class DependentUserComponent implements OnInit {
       this.dependentDatas = data.map(e =>{
         const data = e.payload.doc.data() as DependentData;
         const id = e.payload.doc.id;
-        this.uidParent = e.payload.doc.data()['uidParent'];
-        if(this.uidParent = this.userUid){
-          return { id, ...data };
-        }else{
-          return null;
-        }
-
+        return { id, ...data };
       })
     });
   }

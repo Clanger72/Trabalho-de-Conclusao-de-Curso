@@ -27,12 +27,12 @@ export class DependentService {
               }
 
   getDependent() {
-    return this.afs.collection('dependent').snapshotChanges();
+    return this.afs.collection('user').doc(this.userData.uid).collection("dependent").snapshotChanges();
   }
 
   async createDependent(dependentData){
     return new Promise<any>((resolve, reject) => {
-      this.afs
+      this.afs.collection("user").doc(dependentData.uidParent)
           .collection("dependent")
           .add(dependentData)
           .then(res => {
