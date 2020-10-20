@@ -18,6 +18,8 @@ export class DependentUserComponent implements OnInit {
   userUid: any;
   registerUsers: RegisterUser[];
   dependentDatas: DependentData[];
+  userData: any;
+  userId: any;
 
   @Input() lDependent: boolean = false;
   @Input() lEdit: boolean = false;
@@ -26,7 +28,19 @@ export class DependentUserComponent implements OnInit {
               private dependentService: DependentService,
               public dependentData: DependentData,
               private fireStore: AngularFirestore,
-              private afu: AngularFireAuth) { }
+              private afu: AngularFireAuth) {
+                this.afu.authState.subscribe((auth =>{
+                  if(auth){
+                    this.userData = auth;
+                    localStorage.setItem('user', JSON.stringify(this.userData));
+                    JSON.parse(localStorage.getItem('user'));
+                    this.userId = this.userData.uid;
+                }else{
+                    localStorage.setItem('user', null);
+                    JSON.parse(localStorage.getItem('user'));
+                }
+                }))
+               }
 
   ngOnInit(){
     this.service.getUser().subscribe(data =>{
@@ -54,7 +68,7 @@ export class DependentUserComponent implements OnInit {
   createNewDependent(dependentData: DependentData){
      dependentData = {
       uid: this.fireStore.createId(),
-      uidParent: this.userUid,
+      uidParent: this.userId,
       nome: dependentData.nome,
       cpf: dependentData.cpf,
       telefone: dependentData.telefone,

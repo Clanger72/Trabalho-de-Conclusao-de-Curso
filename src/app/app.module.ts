@@ -30,6 +30,7 @@ import { DependentUserComponent } from './dependent-user/dependent-user.componen
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { ContractSignatureComponent } from './contract-signature/contract-signature.component';
+import { HomeAdminComponent } from './home-admin/home-admin.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { ContractSignatureComponent } from './contract-signature/contract-signat
     UserProfileComponent,
     VerifyEmailComponent,
     ContractSignatureComponent,
+    HomeAdminComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),

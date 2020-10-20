@@ -6,7 +6,7 @@
             <div class="row">
               <div class="col-xs-6 col-md-3 form-group">
                   <label for="userCpf">CPF</label>
-                  <input class="form-control" id="userCpf" name="CPF" required [(ngModel)]="registerUser.cpf" placeholder="000.000.000-00" type="text" />
+                  <input class="form-control" id="userCpf" name="CPF" required [(ngModel)]="registerUser.cpf" placeholder="000.000.000-00" type="text"/>
               </div>
               <div class="col-xs-4 col-md-6 form-group">
                 <label for="userNome">Nome Completo:</label>
@@ -25,12 +25,16 @@
                 <input type="email" name="userEmail" class="form-control" id="email" required [(ngModel)]="registerUser.email" placeholder="Informe seu e-mail">
               </div>
               <div class="col-xs-4 col-md-3 form-group">
-                <label for="cep">CEP:</label>
-                <input type="cep" name="cep" class="form-control" id="cep" required [(ngModel)]="registerUser.cep" placeholder="00000-000">
+                <label for="rg">RG:</label>
+                <input type="rg" name="rg" class="form-control" id="rg" required [(ngModel)]="registerUser.rg" placeholder="5.653.521-6">
               </div>
-              <div class="col-xs-4 col-md-9 form-group">
-                <label for="street">Endereço</label>
-                <input class="form-control" id="street" name="street" required [(ngModel)]="registerUser.street" placeholder="Rua"  type="text">
+              <div class="col-xs-4 col-md-3 form-group">
+                <label for="cep">CEP:</label>
+                <input type="cep" name="cep" class="form-control" id="cep" required [(ngModel)]="registerUser.cep" placeholder="5.653.521-6">
+              </div>
+              <div class="col-xs-4 col-md-6 form-group">
+                <label for="city">Cidade</label>
+                <input class="form-control" id="city" name="city" required [(ngModel)]="registerUser.city" placeholder="Cidade" type="text" />
               </div><!--fim control-group-->
               <div class="col-xs-4 col-md-3 form-group">
                   <label for="number">Número</label>
@@ -39,8 +43,8 @@
             </div> <!-- fim row -->
             <div class="row">
                 <div class="col-xs-6 col-md-9 form-group">
-                    <label for="city">Cidade</label>
-                    <input class="form-control" id="city" name="city" required [(ngModel)]="registerUser.city" placeholder="Cidade" type="text" />
+                  <label for="street">Rua</label>
+                  <input class="form-control" id="street" name="street" required [(ngModel)]="registerUser.street" placeholder="Rua"  type="text">
                 </div>
                 <div class="col-xs-4 col-md-3 form-group">
                     <label for="state">Estado</label>
@@ -92,6 +96,10 @@
                             !registerUser.cep || !registerUser.street || !registerUser.number || !registerUser.city || !registerUser.state ||
                             !password || !passwordCheck"
                             title="Preencha todos os campos" >Criar Conta</button>
+              </div>
+              <div class="col-xs-4 col-md-3 form-group">
+                <br>
+                <button class="btn btn-dark bg-secondary m-2 col-12" (click)="back()">Voltar</button>
               </div>
             </div>
             <div class="row">

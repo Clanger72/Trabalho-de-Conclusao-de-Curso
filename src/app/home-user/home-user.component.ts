@@ -4,8 +4,10 @@ import { Router } from '@angular/router';
 import { RegisterUserService } from '../shared/services/register-user.service';
 import { RegisterUser } from '../shared/model/register-user.model';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
 import { DependentService } from '../shared/services/dependent.service';
+import { stringify } from 'querystring';
+import { Observable } from 'rxjs';
 
 
 
@@ -41,11 +43,14 @@ export class HomeUserComponent implements OnInit{
                 }))
               }
 
- ngOnInit() {
+  ngOnInit() {
     this.service.getUser().subscribe(data =>{
       this.registerUsers = data.map(e =>{
         const data = e.payload.doc.data() as RegisterUser;
         const id = e.payload.doc.id;
+        if(id === this.userId){
+          this.userName = e.payload.doc.data()["nome"];
+        }
         return { id, ...data };
       })
     });

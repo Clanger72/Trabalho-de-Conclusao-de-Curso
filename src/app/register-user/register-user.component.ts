@@ -19,12 +19,25 @@ export class RegisterUserComponent implements OnInit {
   SuccessMessage = "";
   error: {name:string, message:string} = {name: "", message: ""};
   registerUsers: RegisterUser[];
+  userData: any;
+  userId: any;
 
   constructor(private router: Router,
               private loginService: LoginService,
               private registerUserService: RegisterUserService,
               public registerUser: RegisterUser,
               private afu: AngularFireAuth) {
+                this.afu.authState.subscribe((auth =>{
+                  if(auth){
+                    this.userData = auth;
+                    localStorage.setItem('user', JSON.stringify(this.userData));
+                    JSON.parse(localStorage.getItem('user'));
+                    this.userId = this.userData.uid;
+                }else{
+                    localStorage.setItem('user', null);
+                    JSON.parse(localStorage.getItem('user'));
+                }
+                }))
                }
 
   ngOnInit() {
@@ -42,6 +55,10 @@ export class RegisterUserComponent implements OnInit {
     this.SuccessMessage = "";
   }
 
+  back(){
+    this.router.navigate(['login']);
+  }
+
   create(registerUser: RegisterUser){
 
     this.clearErrorMessage();
@@ -52,8 +69,10 @@ export class RegisterUserComponent implements OnInit {
         id: user.uid,
         email: user.email,
         emailVerified: user.emailVerified,
+        displayName: registerUser.nome,
         nome: registerUser.nome,
         cpf: registerUser.cpf,
+        rg: registerUser.rg,
         dtBirth: registerUser.dtBirth,
         telefone: registerUser.telefone,
         cep: registerUser.cep,
@@ -62,6 +81,7 @@ export class RegisterUserComponent implements OnInit {
         city: registerUser.city,
         state: registerUser.state
       }
+      alert('update');
       this.registerUserService.updateUser(registerUser);
 
       this.errorMessage = "";

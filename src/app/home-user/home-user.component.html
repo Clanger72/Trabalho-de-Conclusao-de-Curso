@@ -2,9 +2,9 @@
     <div class="row">
         <nav class="navbar navbar-light bg-light col-md-12 border-bottom">
             <a class="navbar-brand my-2 px-5" id="logo" routerLink="home">Assinantes</a>
-            <form class="form-inline my-2 my-lg-0"  *ngFor="let registerUser of registerUsers;">
-              <div *ngIf="registerUser.id == this.userId">
-                <h5 id="userHome">{{registerUser.nome}}</h5>
+            <form class="form-inline my-2 my-lg-0">
+              <div>
+                <h5 id="userHome">{{userName}}</h5>
               </div>
             </form>
         </nav>

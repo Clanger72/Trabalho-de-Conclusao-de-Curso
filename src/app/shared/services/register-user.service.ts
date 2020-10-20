@@ -29,15 +29,15 @@ export class RegisterUserService {
                 }))
     }
 
-    registerWithEmail(email:string, password:string): any{
-      this.afu.createUserWithEmailAndPassword(email, password).then((user) =>
-      {
-        this.authState = user;
-      }).catch(error=>{
-        console.log(error);
-        throw error
-      })
-    }
+  registerWithEmail(email:string, password:string): any{
+    this.afu.createUserWithEmailAndPassword(email, password).then((user) =>
+    {
+      this.authState = user;
+    }).catch(error=>{
+      console.log(error);
+      throw error
+    })
+  }
 
   getUser() {
     return this.firestore.collection('user').snapshotChanges();

@@ -3,6 +3,9 @@ import { AngularFirestore, AngularFirestoreDocument, DocumentReference} from '@a
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { DependentData } from '../model/dependent-data';
+import { auth, User } from 'firebase';
+import { Observable } from 'rxjs';
+import { DependentUserComponent } from 'src/app/dependent-user/dependent-user.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,25 +17,31 @@ export class DependentService {
   constructor(public afs: AngularFirestore,
               private afu: AngularFireAuth,
               private router: Router) {
-                this.afu.authState.subscribe(dep =>{
-                  if(dep){
-                      this.userData = dep;
-                      localStorage.setItem('dependent', JSON.stringify(this.userData));
-                      JSON.parse(localStorage.getItem('dependent'));
-                  }else{
-                      localStorage.setItem('dependent', null);
-                      JSON.parse(localStorage.getItem('dependent'));
-                  }
-              })
+                this.afu.authState.subscribe((auth =>{
+                  if(auth){
+                    this.userData = auth;
+                    localStorage.setItem('user', JSON.stringify(this.userData));
+                    JSON.parse(localStorage.getItem('user'));
+                    console.log("0", this.userData.uid);
+                }else{
+                    localStorage.setItem('user', null);
+                    JSON.parse(localStorage.getItem('user'));
+                }
+                }))
               }
 
-  getDependent() {
+  getDependent(){
+    this.delay(300);
     return this.afs.collection('user').doc(this.userData.uid).collection("dependent").snapshotChanges();
+  }
+
+  delay(ms) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
   async createDependent(dependentData){
     return new Promise<any>((resolve, reject) => {
-      this.afs.collection("user").doc(dependentData.uidParent)
+      this.afs.collection("user").doc(this.userData.uid)
           .collection("dependent")
           .add(dependentData)
           .then(res => {
