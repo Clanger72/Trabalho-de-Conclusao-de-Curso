@@ -7,7 +7,7 @@ import { PoModule } from '@po-ui/ng-components';
 import { RouterModule } from '@angular/router';
 
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -21,6 +21,9 @@ import { RegisterUserService } from './shared/services/register-user.service';
 import { RegisterUser } from './shared/model/register-user.model';
 import { DependentService } from './shared/services/dependent.service';
 import { DependentData } from './shared/model/dependent-data';
+import { SignatureModel, Template } from './shared/model/contract';
+import { RegisterSignerService } from './shared/services/register-signer.service';
+import { EmbedModel } from './shared/model/signature-model';
 
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -53,6 +56,7 @@ import { HomeAdminComponent } from './home-admin/home-admin.component';
     MatButtonModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     PoModule,
@@ -63,7 +67,11 @@ import { HomeAdminComponent } from './home-admin/home-admin.component';
     RegisterUserService,
     RegisterUser,
     DependentService,
-    DependentData
+    DependentData,
+    SignatureModel,
+    RegisterSignerService,
+    EmbedModel,
+    Template
   ],
   bootstrap: [AppComponent]
 })

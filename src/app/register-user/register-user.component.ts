@@ -60,11 +60,9 @@ export class RegisterUserComponent implements OnInit {
   }
 
   create(registerUser: RegisterUser){
-
     this.clearErrorMessage();
     this.loginService.doRegister(this.registerUser.email, this.password).then(async _res => {
       let user = await this.afu.currentUser;
-
       registerUser = {
         id: user.uid,
         email: user.email,
@@ -76,12 +74,12 @@ export class RegisterUserComponent implements OnInit {
         dtBirth: registerUser.dtBirth,
         telefone: registerUser.telefone,
         cep: registerUser.cep,
+        neighborhood: registerUser.neighborhood,
         street: registerUser.street,
         number: registerUser.number,
         city: registerUser.city,
         state: registerUser.state
       }
-      alert('update');
       this.registerUserService.updateUser(registerUser);
 
       this.errorMessage = "";

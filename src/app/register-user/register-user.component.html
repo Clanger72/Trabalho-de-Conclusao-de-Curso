@@ -42,7 +42,11 @@
               </div>
             </div> <!-- fim row -->
             <div class="row">
-                <div class="col-xs-6 col-md-9 form-group">
+                <div class="col-xs-4 col-md-3 form-group">
+                  <label for="neighborhood">Bairro</label>
+                  <input class="form-control" id="street" name="neighborhood" required [(ngModel)]="registerUser.neighborhood" placeholder="Bairro"  type="text">
+                </div>
+                <div class="col-xs-4 col-md-6 form-group">
                   <label for="street">Rua</label>
                   <input class="form-control" id="street" name="street" required [(ngModel)]="registerUser.street" placeholder="Rua"  type="text">
                 </div>

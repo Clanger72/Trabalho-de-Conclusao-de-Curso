@@ -48,7 +48,7 @@ export class RegisterUserService {
   }
 
   updateUser(registerUser: RegisterUser){
-    this.firestore.doc(`user/${registerUser.id}`).update(registerUser);
+    return this.firestore.doc(`user/${registerUser.id}`).update(registerUser);
   }
 
   deleteUser(registerUserId: string){

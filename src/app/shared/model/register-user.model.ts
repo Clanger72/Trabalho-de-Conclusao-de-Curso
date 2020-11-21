@@ -8,6 +8,7 @@ export class RegisterUser {
     email: string;
     telefone: string;
     cep: string;
+    neighborhood: string;
     street: string;
     number: string;
     city: string;

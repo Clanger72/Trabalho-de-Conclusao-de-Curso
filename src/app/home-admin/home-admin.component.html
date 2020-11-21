@@ -1,5 +1,20 @@
-<p>home-admin works!</p>
-<button (click)="logout()">sair</button>
+<div class="container-fluid">
+  <div class="row">
+      <nav class="navbar navbar-light bg-light col-md-12 border-bottom">
+          <img src="../../assets/images/destrava.jpg" id="logo" class="img-rounded">
+          <form class="form-inline my-2 my-lg-0">
+            <div>
+              <h5 id="userHome">{{userName}}</h5>
+              <button type="button" class="btn btn-default btn-md-1" aria-label="Left Align" (click)="logout()">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>Sair
+              </button>
+            </div>
+          </form>
+      </nav>
+      <hr>
+  </div>
+</div>
+
 <div class="container-fluid">
   <div class="col-md-2"></div>
   <div class="col-md-10">
@@ -15,5 +30,32 @@
         </div>
       </div>
     </form>
+  </div>
+</div>
+
+<div class="container-fluid ">
+  <div class="row">
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nome</th>
+              <th scope="col">CPF</th>
+              <th scope="col">Data Assinatura</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let Contract of contract; let count = index">
+              <th scope="row">{{count}}</th>
+              <td>{{Contract.dtSignature}}</td>
+            </tr>
+            <tr>
+              <th></th>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
   </div>
 </div>

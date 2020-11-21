@@ -2,7 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { RegisterUserService } from '../shared/services/register-user.service';
 import { RegisterUser } from '../shared/model/register-user.model';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 import { async } from '@angular/core/testing';
+
 
 
 @Component({
@@ -19,15 +21,11 @@ export class UserProfileComponent implements OnInit {
   registerUsers: RegisterUser[];
   userData:any = [];
   userUid: any;
-  nomeUser: any;
-  cpfUser: any;
-  rgUser: any;
-  dtBirthuser: any;
-
 
   constructor(private service: RegisterUserService,
               public registerUser: RegisterUser,
-              private afu: AngularFireAuth
+              private afu: AngularFireAuth,
+              public router: Router
     ) { }
 
   async ngOnInit() {
@@ -38,19 +36,25 @@ export class UserProfileComponent implements OnInit {
         const id = e.payload.doc.id;
         this.userUid =  e.payload.doc.data()['id'];
         if(user.uid == this.userUid){
-          this.nomeUser = e.payload.doc.data()['nome'];
-          this.cpfUser = e.payload.doc.data()['cpf'];
-          this.rgUser = e.payload.doc.data()['rg'];
-          this.dtBirthuser = e.payload.doc.data()['dtBirth'];
-          console.log(this.nomeUser);
+          this.registerUser = {
+            id: user.uid,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            nome: e.payload.doc.data()['nome'],
+            displayName: e.payload.doc.data()['nome'],
+            cpf: e.payload.doc.data()['cpf'],
+            rg: e.payload.doc.data()['rg'],
+            dtBirth: e.payload.doc.data()['dtBirth'],
+            telefone: e.payload.doc.data()['telefone'],
+            cep: e.payload.doc.data()['cep'],
+            neighborhood: e.payload.doc.data()['neighborhood'],
+            street: e.payload.doc.data()['street'],
+            number:e.payload.doc.data()['number'],
+            city: e.payload.doc.data()['city'],
+            state: e.payload.doc.data()['state']
+          }
           return { id, ...data };
-        }else{
-          this.nomeUser = '';
-          this.cpfUser = '';
-          this.rgUser = '';
-          this.dtBirthuser = '';
         }
-
       })
     });
   }
@@ -69,13 +73,17 @@ export class UserProfileComponent implements OnInit {
       dtBirth: registerUser.dtBirth,
       telefone: registerUser.telefone,
       cep: registerUser.cep,
+      neighborhood: registerUser.neighborhood,
       street: registerUser.street,
       number: registerUser.number,
       city: registerUser.city,
       state: registerUser.state
     }
     this.service.updateUser(registerUser);
+  }
 
+  routerHome(){
+    this.router.navigate(['home']);
   }
 
 }

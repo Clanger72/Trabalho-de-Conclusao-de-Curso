@@ -1,6 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { RegisterUser } from '../shared/model/register-user.model';
-import { RegisterUserService } from '../shared/services/register-user.service';
 import { DependentService } from '../shared/services/dependent.service';
 import { DependentData } from '../shared/model/dependent-data';
 
@@ -15,8 +13,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class DependentUserComponent implements OnInit {
 
   newDependent: boolean = false;
-  userUid: any;
-  registerUsers: RegisterUser[];
   dependentDatas: DependentData[];
   userData: any;
   userId: any;
@@ -24,35 +20,25 @@ export class DependentUserComponent implements OnInit {
   @Input() lDependent: boolean = false;
   @Input() lEdit: boolean = false;
 
-  constructor(private service: RegisterUserService,
-              private dependentService: DependentService,
+  constructor(private dependentService: DependentService,
               public dependentData: DependentData,
               private fireStore: AngularFirestore,
               private afu: AngularFireAuth) {
-                this.afu.authState.subscribe((auth =>{
-                  if(auth){
-                    this.userData = auth;
-                    localStorage.setItem('user', JSON.stringify(this.userData));
-                    JSON.parse(localStorage.getItem('user'));
+                this.afu.authState.subscribe(dep =>{
+                  if(dep){
+                    this.userData = dep;
+                    localStorage.setItem('dependent', JSON.stringify(this.userData));
+                    JSON.parse(localStorage.getItem('dependent'));
                     this.userId = this.userData.uid;
                 }else{
-                    localStorage.setItem('user', null);
-                    JSON.parse(localStorage.getItem('user'));
+                    localStorage.setItem('dependent', null);
+                    JSON.parse(localStorage.getItem('dependent'));
                 }
-                }))
+                })
                }
 
-  ngOnInit(){
-    this.service.getUser().subscribe(data =>{
-      this.registerUsers = data.map(e =>{
-        const data = e.payload.doc.data() as RegisterUser;
-        const id = e.payload.doc.id;
-        this.userUid =  e.payload.doc.data()['id'];
-        return { id, ...data };
-      })
-    });
-
-    this.dependentService.getDependent().subscribe(data =>{
+  async ngOnInit(){
+    (await this.dependentService.getDependent()).subscribe(data =>{
       this.dependentDatas = data.map(e =>{
         const data = e.payload.doc.data() as DependentData;
         const id = e.payload.doc.id;

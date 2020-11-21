@@ -1,13 +1,13 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, OnInit, Output, ViewChild } from '@angular/core';
 import { LoginService } from '../shared/services/login.service';
-import { Router } from '@angular/router';
 import { RegisterUserService } from '../shared/services/register-user.service';
 import { RegisterUser } from '../shared/model/register-user.model';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
-import { DependentService } from '../shared/services/dependent.service';
-import { stringify } from 'querystring';
-import { Observable } from 'rxjs';
+import { SendSegnerService } from '../shared/services/send-segner.service';
+import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
+import {catchError, map} from 'rxjs/operators';
+import {of} from 'rxjs';
+
 
 
 
@@ -26,10 +26,12 @@ export class HomeUserComponent implements OnInit{
   userData: any;
   userId: any;
 
+  @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef; files = ['C:\termoTest1.pdf'];
+
   constructor(private loginService: LoginService,
-              private router: Router,
               private service: RegisterUserService,
-              private afu: AngularFireAuth,)  {
+              private afu: AngularFireAuth,
+              private sendSegnerService: SendSegnerService)  {
                 this.afu.authState.subscribe((auth =>{
                   if(auth){
                     this.userData = auth;
@@ -56,6 +58,30 @@ export class HomeUserComponent implements OnInit{
     });
   }
 
+  uploadFile(file) {
+        const formData = new FormData();
+        formData.append('file', file.data);
+        file.inProgress = true;
+        this.sendSegnerService.upload(formData).pipe(
+          map(event => {
+            switch (event.type) {
+              case HttpEventType.UploadProgress:
+                file.progress = Math.round(event.loaded * 100 / event.total);
+                break;
+              case HttpEventType.Response:
+                return event;
+            }
+          }),
+          catchError((error: HttpErrorResponse) => {
+            file.inProgress = false;
+            return of(`Upload failed: ${file.data.name}`);
+          })).subscribe((event: any) => {
+            if (typeof (event) === 'object') {
+              console.log(event.body);
+            }
+          });
+      }
+
   signatureContract(){
     this.signature = true;
     this.createDependent = false;
@@ -77,5 +103,4 @@ export class HomeUserComponent implements OnInit{
   logout(){
     this.loginService.logout();
   }
-
 }
