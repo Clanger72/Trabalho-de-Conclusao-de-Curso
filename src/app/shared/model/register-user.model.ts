@@ -1,11 +1,14 @@
 export class RegisterUser {
     id: string;
     nome: string;
+    displayName:string;
     cpf: string;
+    rg: string
     dtBirth: string;
     email: string;
     telefone: string;
     cep: string;
+    neighborhood: string;
     street: string;
     number: string;
     city: string;

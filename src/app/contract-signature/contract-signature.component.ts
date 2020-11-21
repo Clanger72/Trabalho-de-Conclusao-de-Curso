@@ -1,15 +1,109 @@
 import { Component, OnInit } from '@angular/core';
+import { RegisterSignerService } from '../shared/services/register-signer.service';
+import { SignatureModel, Template } from '../shared/model/contract';
+import { ContractService } from '../shared/services/contract.service';
+import { RegisterUserService } from '../shared/services/register-user.service';
+import { RegisterUser } from '../shared/model/register-user.model';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { EmbedModel } from '../shared/model/signature-model';
 
 @Component({
   selector: 'app-contract-signature',
   templateUrl: './contract-signature.component.html',
   styleUrls: ['./contract-signature.component.css']
 })
+
 export class ContractSignatureComponent implements OnInit {
 
-  constructor() { }
+  registerUsers: RegisterUser[];
+  userData: any;
+  userId: any;
+  userEmail: string;
 
-  ngOnInit(): void {
+  constructor(private registerSigner: RegisterSignerService,
+              private signatureModel: SignatureModel,
+              private embedModel: EmbedModel,
+              private template: Template,
+              private contractService: ContractService,
+              private service: RegisterUserService,
+              private afu: AngularFireAuth,) {
+                this.afu.authState.subscribe((auth =>{
+                  if(auth){
+                    this.userData = auth;
+                    localStorage.setItem('user', JSON.stringify(this.userData));
+                    JSON.parse(localStorage.getItem('user'));
+                    this.userId = this.userData.uid;
+                    console.log("this.userId", this.userId);
+                }else{
+                    localStorage.setItem('user', null);
+                    JSON.parse(localStorage.getItem('user'));
+                }
+                }))
+              }
+
+
+
+  async ngOnInit() {
+    this.service.getUser().subscribe(data =>{
+      this.registerUsers = data.map(e =>{
+        const data = e.payload.doc.data() as RegisterUser;
+        const id = e.payload.doc.id;
+        if(id === this.userId){
+          this.userEmail = e.payload.doc.data()["email"];
+          this.embedModel = {
+            email: e.payload.doc.data()["email"],
+            display_name: e.payload.doc.data()["nome"],
+            documentation: e.payload.doc.data()["cpf"],
+            birthday: e.payload.doc.data()["dtBirth"]
+          }
+          this.template = {
+            name_document: "Termo de Responsabilidade Destrava",
+            templates: {
+              "MzQ2": {
+                nome: this.embedModel.display_name,
+                cpf: this.embedModel.documentation,
+                telefone: e.payload.doc.data()["telefone"],
+                email:  this.embedModel.email,
+                dtBirth: this.embedModel.birthday,
+                idade: '22',
+                rua: e.payload.doc.data()["street"],
+                bairro: e.payload.doc.data()["neighborhood"],
+                number: e.payload.doc.data()["number"],
+                cidade: e.payload.doc.data()["city"],
+                estado: e.payload.doc.data()["state"],
+              }
+            }
+          }
+        }
+        return { id, ...data };
+      })
+    });
+    await this.contractService.delay(300);
+    this.registerSigner.ListTemplate();
+    this.registerSigner.ListSafes('safes');
+    let templateResponse = this.registerSigner.createDocument(this.template);
+    // await this.contractService.delay(10000);
+    // console.log("TemplateResponse", templateResponse.);
+    //this.createSigner(this.userEmail, templateResponse)
+    this.registerSigner.embed(this.embedModel);
   }
 
+  createTemplate(){
+
+  }
+
+  createSigner(email){
+    this.signatureModel = {
+      signers : [
+        {
+          email: email,
+          act: "1",
+          foreign: "0",
+          certificadoicpbr: "0",
+          assinatura_presencial: "0",
+          embed_methodauth: "email",
+        }]
+    };
+    this.registerSigner.createListSigner('createlist', this.signatureModel);
+  }
 }

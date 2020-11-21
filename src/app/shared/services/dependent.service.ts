@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument, DocumentReference} from '@angular/fire/firestore';
+import { AngularFirestore} from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Router } from '@angular/router';
 import { DependentData } from '../model/dependent-data';
 
 @Injectable({
@@ -12,22 +11,11 @@ export class DependentService {
   userData: any;
 
   constructor(public afs: AngularFirestore,
-              private afu: AngularFireAuth,
-              private router: Router) {
-                this.afu.authState.subscribe(dep =>{
-                  if(dep){
-                      this.userData = dep;
-                      localStorage.setItem('dependent', JSON.stringify(this.userData));
-                      JSON.parse(localStorage.getItem('dependent'));
-                  }else{
-                      localStorage.setItem('dependent', null);
-                      JSON.parse(localStorage.getItem('dependent'));
-                  }
-              })
-              }
+              private afu: AngularFireAuth) {}
 
-  getDependent() {
-    return this.afs.collection('user').doc(this.userData.uid).collection("dependent").snapshotChanges();
+  async getDependent(){
+    let user = await this.afu.currentUser;
+    return this.afs.collection('user').doc(user.uid).collection("dependent").snapshotChanges();
   }
 
   async createDependent(dependentData){

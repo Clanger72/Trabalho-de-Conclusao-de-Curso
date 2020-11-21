@@ -63,9 +63,13 @@ export class LoginService {
     return (user.emailVerified !== false) ? true : false;
   }
 
+  delay(ms) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   get isLoggedIn():boolean {
     const user = JSON.parse(localStorage.getItem('user'));
-    return (user != null && user.emailVerified != false) ? true : false;
+    return (user && user.emailVerified) ? true : false;
   }
 
   SetUserData(user) {
@@ -86,6 +90,7 @@ export class LoginService {
   async logout(){
       await this.afu.signOut();
       localStorage.removeItem('user');
+      localStorage.removeItem('dependent');
       this.router.navigate(['login'])
   }
 }

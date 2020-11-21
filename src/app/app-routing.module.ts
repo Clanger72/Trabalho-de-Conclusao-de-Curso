@@ -6,6 +6,7 @@ import { HomeUserComponent } from './home-user/home-user.component';
 import { DependentUserComponent } from './dependent-user/dependent-user.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { HomeAdminComponent } from './home-admin/home-admin.component';
 
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path: 'home', component: HomeUserComponent},
   {path: 'dependent', component: DependentUserComponent},
   {path: 'userProfile', component: UserProfileComponent},
-  {path: 'VerifyEmail', component: VerifyEmailComponent}
+  {path: 'VerifyEmail', component: VerifyEmailComponent},
+  {path: 'home-admin', component: HomeAdminComponent}
 ];
 
 @NgModule({
