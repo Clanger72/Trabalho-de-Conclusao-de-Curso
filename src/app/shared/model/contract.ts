@@ -55,6 +55,33 @@ export class Template{
   }
 }
 
+export class TemplateDependent{
+  name_document: string;
+  //uuid_folder: string; deixar sem folfer por enquanto
+  templates: {
+    "MzQ4": {
+      nome: string;
+      cpf: string;
+      telefone: string;
+      email: string;
+      dtBirth: string;
+      idade: string;
+      rua: string;
+      bairro: string;
+      number: string;
+      cidade: string;
+      estado: string;
+      nome_dep: string;
+      cpf_dep: string;
+      parent: string;
+      telefone_dep: string;
+      idade_dep: string;
+      outro: string;
+      contato_dep: string;
+    }
+  }
+}
+
 export class SendContract{
   skip_email: string;
   workflow:string;

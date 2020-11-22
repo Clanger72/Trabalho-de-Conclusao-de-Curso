@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DependentService } from '../shared/services/dependent.service';
 import { DependentData } from '../shared/model/dependent-data';
+import { RegisterSignerService } from '../shared/services/register-signer.service';
+import { TemplateDependent } from '../shared/model/contract';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -22,6 +24,8 @@ export class DependentUserComponent implements OnInit {
 
   constructor(private dependentService: DependentService,
               public dependentData: DependentData,
+              private registerSignerService: RegisterSignerService,
+              private templateDependent: TemplateDependent,
               private fireStore: AngularFirestore,
               private afu: AngularFireAuth) {
                 this.afu.authState.subscribe(dep =>{
@@ -63,6 +67,37 @@ export class DependentUserComponent implements OnInit {
     }
     this.dependentService.createDependent(dependentData);
     this.newDependent = false;
+  }
+
+  SignerContractForDependent(dependentData: DependentData){
+    console.log(dependentData);
+    //chamar assinatura
+    this.templateDependent = {
+      name_document: 'Termo de Responsabilidade Dependente Destrava',
+      templates: {
+        "MzQ4": {
+          nome: '',
+          cpf: '',
+          telefone: '',
+          email: '',
+          dtBirth: '',
+          idade: '',
+          rua: '',
+          bairro: '',
+          number: '',
+          cidade: '',
+          estado: '',
+          nome_dep: dependentData.nome,
+          cpf_dep: dependentData.cpf,
+          parent: dependentData.typeParent,
+          telefone_dep: dependentData.telefone,
+          idade_dep: dependentData.dtBirth,
+          outro: '',
+          contato_dep: '',
+        }
+      }
+    }
+    this.registerSignerService.createDocumentDependent(dependentData);
   }
 
   backToList(): void{
