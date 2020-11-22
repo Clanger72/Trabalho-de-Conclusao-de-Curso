@@ -4,6 +4,7 @@ import { RegisterUser } from '../shared/model/register-user.model';
 import { LoginService } from '../shared/services/login.service';
 import { ContractService } from '../shared/services/contract.service';
 import { RegisterUserService } from '../shared/services/register-user.service';
+import { RegisterSignerService } from '../shared/services/register-signer.service';
 import { Contract } from '../shared/model/contract';
 
 
@@ -18,6 +19,7 @@ export class HomeAdminComponent implements OnInit {
   userId: any;
   userName: string;
   message: string;
+  searchCpf: string;
 
   registerUsers: RegisterUser[];
   contract: Contract[];
@@ -26,6 +28,7 @@ export class HomeAdminComponent implements OnInit {
   constructor(private loginService: LoginService,
               private contractService: ContractService,
               private service: RegisterUserService,
+              private registerSignerService: RegisterSignerService,
               private afu: AngularFireAuth)  {
                 this.afu.authState.subscribe((auth =>{
                   if(auth){
@@ -45,7 +48,13 @@ export class HomeAdminComponent implements OnInit {
       this.registerUsers = data.map(e =>{
         const data = e.payload.doc.data() as RegisterUser;
         const id = e.payload.doc.id;
-        this.getContract(id);
+        this.registerSignerService.ListDocs("status").subscribe(res =>{
+          if(res != ""){
+            console.log("Lista de contratos vazia");
+          }else{
+            console.log(res);
+          }
+        })
         if(id === this.userId){
           this.userName = e.payload.doc.data()["nome"];
         }
@@ -53,6 +62,19 @@ export class HomeAdminComponent implements OnInit {
       })
     });
   }
+
+
+  getDocumentSpecifc(searchCpf){
+    console.log("Testando");
+    this.registerUsers.map(data =>{
+      if(data.cpf === searchCpf){
+        console.log(data);
+        return this.service.getSpecificUser(data.id)
+      }
+    })
+    //this.registerSignerService.ListSpecificDocs(uuid)
+  }
+
 
   getContract(id){
     this.contractService.getAllContract(id).subscribe(data =>{

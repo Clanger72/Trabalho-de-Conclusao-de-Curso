@@ -9,9 +9,13 @@
             <div class="col-sm-8 contact-form">
                 <form id="contact" method="post" class="form" role="form" (ngSubmit)="salvar(registerUser)">
                     <div class="row">
-                      <div class="col-xs-4 col-md-8 form-group">
+                      <div class="col-xs-4 col-md-12 form-group">
                           <label for="inputname">Nome</label>
                           <input class="form-control" id="inputname" name="nome" type="nome" [(ngModel)]="registerUser.nome" />
+                      </div>
+                      <div class="col-xs-4 col-md-12 form-group">
+                        <label for="inputage">Idade</label>
+                        <input class="form-control" id="inputage" name="age" type="age" [(ngModel)]="registerUser.age" />
                       </div>
                       <div class="col-xs-6 col-md-4 form-group">
                         <label for="inputCPF">CPF</label>
@@ -24,10 +28,6 @@
                       <div class="col-xs-4 col-md-4 form-group">
                           <label for="inputDtBirth">Data de Nascimeto</label>
                           <input class="form-control" id="inputDtBirth" name="Nascimento" type="date" [(ngModel)]="registerUser.dtBirth" readonly />
-                      </div>
-                      <div class="col-xs-6 col-md-4 form-group">
-                        <label for="inputRg">RG</label>
-                        <input class="form-control" id="inputRg" name="inputRg" [(ngModel)]="registerUser.rg" type="text" readonly />
                       </div>
                       <div class="col-xs-4 col-md-12 form-group">
                           <label for="inputemail">E-mail</label>
@@ -47,9 +47,13 @@
                     </div>
                     <!-- Text input cidade e estado-->
                     <div class="row">
-                      <div class="col-xs-6 col-md-9 form-group">
+                      <div class="col-xs-6 col-md-5 form-group">
                           <label for="inputcidade">Cidade</label>
                           <input class="form-control" id="inputcidade" name="cidade" type="text" [(ngModel)]="registerUser.city"/>
+                      </div>
+                      <div class="col-xs-6 col-md-4 form-group">
+                        <label for="inputbairro">Bairro</label>
+                        <input class="form-control" id="inputbairro" name="bairro" type="text" [(ngModel)]="registerUser.neighborhood"/>
                       </div>
                         <div class="col-xs-4 col-md-3 form-group">
                             <label for="selectbasic">Estado</label>

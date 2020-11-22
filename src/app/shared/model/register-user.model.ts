@@ -1,9 +1,9 @@
 export class RegisterUser {
     id: string;
     nome: string;
+    age: string;
     displayName:string;
     cpf: string;
-    rg: string
     dtBirth: string;
     email: string;
     telefone: string;

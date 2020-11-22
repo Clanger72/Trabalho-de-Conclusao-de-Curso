@@ -42,6 +42,10 @@ export class RegisterUserService {
     return this.firestore.collection('user').snapshotChanges();
   }
 
+  getSpecificUser(uuid){
+    return this.firestore.collection('user').doc(uuid).collection('template').snapshotChanges();
+  }
+
   createUser(registerUser: RegisterUser){
     return this.firestore.collection('user/').add(registerUser);
   }

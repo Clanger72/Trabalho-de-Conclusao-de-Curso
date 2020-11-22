@@ -42,6 +42,12 @@ export class RegisterSignerService {
     return this.httpClient.post(url, templateData);
   }
 
+  createDocumentDependent(dependentData): Observable<any>{
+    let template = '/api/v1/documents/c9cf8e5e-c83c-4e20-ba8e-4577b40719e4/makedocumentbytemplate'
+    let url = `${template}${this.apiKey}${this.cript}`;
+    return this.httpClient.post(url, dependentData);
+  }
+
   createListSigner(documents: string, signatureModel, uuid){
     //ducuments=createlist
     let urlSigner = '/api/v1/documents/';
@@ -84,8 +90,18 @@ export class RegisterSignerService {
     //ducuments=status
     let safes = '/api/v1/documents/04/'
     let url = `${safes}${documents}${this.apiKey}${this.cript}&pg=2`;
+    return this.httpClient.get(url);
+    // .subscribe(res => {
+    //   console.log("status", res);
+    // });
+  }
+
+  //Listing documento específico
+  ListSpecificDocs(uuid){
+    let docs = '/api/v1/documents/'
+    let url = `${docs}${uuid}${this.apiKey}${this.cript}`;
     this.httpClient.get(url).subscribe(res => {
-      console.log("Safes", res);
+      console.log("Documento especifico", res);
     });
   }
 

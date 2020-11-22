@@ -13,8 +13,8 @@
                 <input type="name" name="userNome" class="form-control" id="userNome" required [(ngModel)]="registerUser.nome" placeholder="Informe seu nome">
               </div>
               <div class="col-xs-4 col-md-3 form-group">
-                  <label for="dtBirth">Data de Nascimeto</label>
-                  <input class="form-control" id="dtBirth" name="dtBirth" type="date" required [(ngModel)]="registerUser.dtBirth"/>
+                <label for="userAge">Idade:</label>
+                <input type="age" name="userAge" class="form-control" id="userAge" required [(ngModel)]="registerUser.age" placeholder="Informe sua idade">
               </div>
               <div class="col-xs-4 col-md-3 form-group">
                 <label for="telefone">Telefone:</label>
@@ -25,8 +25,8 @@
                 <input type="email" name="userEmail" class="form-control" id="email" required [(ngModel)]="registerUser.email" placeholder="Informe seu e-mail">
               </div>
               <div class="col-xs-4 col-md-3 form-group">
-                <label for="rg">RG:</label>
-                <input type="rg" name="rg" class="form-control" id="rg" required [(ngModel)]="registerUser.rg" placeholder="5.653.521-6">
+                <label for="dtBirth">Data de Nascimeto</label>
+                <input class="form-control" id="dtBirth" name="dtBirth" type="date" required [(ngModel)]="registerUser.dtBirth"/>
               </div>
               <div class="col-xs-4 col-md-3 form-group">
                 <label for="cep">CEP:</label>
