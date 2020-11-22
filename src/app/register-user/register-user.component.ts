@@ -86,7 +86,6 @@ export class RegisterUserComponent implements OnInit {
       this.SuccessMessage = "Sua conta foi criada";
 
     }, err => {
-      console.log(err);
       this.errorMessage = err.message;
       this.SuccessMessage = "";
     })

@@ -61,7 +61,6 @@ export class UserProfileComponent implements OnInit {
 
   async salvar(registerUser: RegisterUser){
     let user = await this.afu.currentUser;
-    console.log(user.email);
     registerUser = {
       id: user.uid,
       email: user.email,

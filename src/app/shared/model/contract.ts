@@ -39,7 +39,7 @@ export class Template{
   name_document: string;
   //uuid_folder: string; deixar sem folfer por enquanto
   templates: {
-    "MzQ2": {
+    "MzQ3": {
       nome: string;
       cpf: string;
       telefone: string;
@@ -53,4 +53,9 @@ export class Template{
       estado: string;
     }
   }
+}
+
+export class SendContract{
+  skip_email: string;
+  workflow:string;
 }

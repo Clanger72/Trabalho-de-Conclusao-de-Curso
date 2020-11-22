@@ -34,7 +34,6 @@ export class RegisterUserService {
     {
       this.authState = user;
     }).catch(error=>{
-      console.log(error);
       throw error
     })
   }
