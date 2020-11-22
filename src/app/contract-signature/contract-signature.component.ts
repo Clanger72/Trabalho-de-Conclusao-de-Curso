@@ -33,7 +33,6 @@ export class ContractSignatureComponent implements OnInit {
                     localStorage.setItem('user', JSON.stringify(this.userData));
                     JSON.parse(localStorage.getItem('user'));
                     this.userId = this.userData.uid;
-                    console.log("this.userId", this.userId);
                 }else{
                     localStorage.setItem('user', null);
                     JSON.parse(localStorage.getItem('user'));
@@ -59,7 +58,7 @@ export class ContractSignatureComponent implements OnInit {
           this.template = {
             name_document: "Termo de Responsabilidade Destrava",
             templates: {
-              "MzQ2": {
+              "MzQ3": {
                 nome: this.embedModel.display_name,
                 cpf: this.embedModel.documentation,
                 telefone: e.payload.doc.data()["telefone"],
@@ -80,19 +79,13 @@ export class ContractSignatureComponent implements OnInit {
     });
     await this.contractService.delay(300);
     this.registerSigner.ListTemplate();
-    this.registerSigner.ListSafes('safes');
-    let templateResponse = this.registerSigner.createDocument(this.template);
-    // await this.contractService.delay(10000);
-    // console.log("TemplateResponse", templateResponse.);
-    //this.createSigner(this.userEmail, templateResponse)
-    this.registerSigner.embed(this.embedModel);
+    this.registerSigner.createDocument(this.template).subscribe(data =>{
+      this.createSigner(this.userEmail, data);
+      this.contractService.createTemplateForSigner(this.userId, data);
+    })
   }
 
-  createTemplate(){
-
-  }
-
-  createSigner(email){
+  createSigner(email, templateRes){
     this.signatureModel = {
       signers : [
         {
@@ -104,6 +97,10 @@ export class ContractSignatureComponent implements OnInit {
           embed_methodauth: "email",
         }]
     };
-    this.registerSigner.createListSigner('createlist', this.signatureModel);
+    this.registerSigner.createListSigner('createlist', this.signatureModel, templateRes.uuid).subscribe( response =>{
+      // this.registerSigner.sendSigner('sendtosigner', templateRes.uuid).subscribe(data =>{
+      //   this.registerSigner.embed(this.embedModel, templateRes.uuid);
+      // })
+    })
   }
 }

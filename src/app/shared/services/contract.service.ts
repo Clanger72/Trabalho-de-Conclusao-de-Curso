@@ -37,6 +37,15 @@ export class ContractService {
       return this.afs.collection('user').doc(id).collection('contract').snapshotChanges();
   }
 
+
+  createTemplateForSigner(id, templateResponse){
+    return new Promise<any>((resolve,reject) =>{
+      this.afs.collection("user").doc(id).collection("template").add(templateResponse).then(res =>{
+        resolve(res);
+      }, err => reject(err));
+    })
+  }
+
   addSigner(id, signer){
     return new Promise<any>((resolve, reject) => {
       this.afs.collection("user").doc(id).collection("signer").add(signer).then(res =>{
