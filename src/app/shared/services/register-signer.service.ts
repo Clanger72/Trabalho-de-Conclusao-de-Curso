@@ -12,11 +12,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RegisterSignerService {
-  //apiUrl = '/api/v1/documents/8fff9202-4c3f-4964-a73a-ebf352ffb6e0/';
-  apiKey = '?tokenAPI=live_14b91e51ea4fe3b6f9420f5a6efc31bf52aecc32de080a2613d1e877508b2a01';
-  //live_e3fd7b803cae4546cf4d1395ccca277ea2daa025910425818fd79f6c6c3caac6';
-  cript = '&cryptKey=live_crypt_evFXSNxibRujwlq50TMpktKqfTcQPzy1';
-  //live_crypt_wCpPa3DDNgR7vBnh8yWsgwvZdD9ZO5nD';
+  apiKey = '?tokenAPI=live_b0f1e899d6dd0f5916e73b5f93de20836fd5978fb6411b6b36e2b9a4bc102ac2';
+  cript = '&cryptKey=live_crypt_VZjVLPWRFsvrkV7knIdUCqPY679pUE9x';
 
   registerUsers: RegisterUser[];
   userData: any;
@@ -33,25 +30,28 @@ export class RegisterSignerService {
               private signatureModel: SignatureModel,
               private sendContract: SendContract,
               private contractService: ContractService,
-              private afu: AngularFireAuth,) {}
+              private afu: AngularFireAuth,) {
+              }
 
   //Create document for the responsible
   createDocument(templateData): Observable<any>{
-    let template = '/api/v1/documents/c9cf8e5e-c83c-4e20-ba8e-4577b40719e4/makedocumentbytemplate'
+    let template = '/api/v1/documents/bf039a9c-5ec0-4a4c-91ed-0232ff33c07d/makedocumentbytemplate'
     let url = `${template}${this.apiKey}${this.cript}`;
     return this.httpClient.post(url, templateData);
   }
 
-  createDocumentDependent(dependentData): Observable<any>{
-    let template = '/api/v1/documents/c9cf8e5e-c83c-4e20-ba8e-4577b40719e4/makedocumentbytemplate'
+  createDocumentDependent(templateDependent): Observable<any>{
+    console.log("templateDependent", templateDependent);
+    let template = '/api/v1/documents/bf039a9c-5ec0-4a4c-91ed-0232ff33c07d/makedocumentbytemplate'
     let url = `${template}${this.apiKey}${this.cript}`;
-    return this.httpClient.post(url, dependentData);
+    return this.httpClient.post(url, templateDependent);
   }
 
   createListSigner(documents: string, signatureModel, uuid){
     //ducuments=createlist
     let urlSigner = '/api/v1/documents/';
     let url = `${urlSigner}${uuid}/${documents}${this.apiKey}${this.cript}`;
+    console.log(signatureModel);
     return this.httpClient.post(url, signatureModel);
   }
 
@@ -63,15 +63,17 @@ export class RegisterSignerService {
       skip_email: "1",
       workflow: "0"
     }
+    console.log("Send-signer", url);
     return this.httpClient.post(url, this.sendContract);
   }
 
   embed(signerModel, uuid){
+    console.log('signerModel', signerModel, 'uuid', uuid);
     d4sign.configure({
       container: "signature-div",
       key: uuid,
-      protocol: "http",
-      host: "demo.d4sign.com.br/embed/viewblob",
+      protocol: "https",
+      host: "secure.d4sign.com.br/embed/viewblob",
       signer: signerModel,
       width: '100%',
       height: '400',
@@ -80,16 +82,16 @@ export class RegisterSignerService {
           alert('ASSINADO');
         }
         if (event.data === "wrong-data") {
-          alert('USUARIO CLICOU NO LINK: Meus dados estão errados.'); //ou redirecionar o usuário para uma página onde poderá alterar os seus dados.
+          this.errorMessage = "Dados Pessoais Incorretos, edite seu perfil e tente novamente!" //ou redirecionar o usuário para uma página onde poderá alterar os seus dados.
         }
       }
-  });
+    });
   }
 
   ListDocs(documents: string){
     //ducuments=status
     let safes = '/api/v1/documents/04/'
-    let url = `${safes}${documents}${this.apiKey}${this.cript}&pg=2`;
+    let url = `${safes}${documents}${this.apiKey}${this.cript}`;
     return this.httpClient.get(url);
     // .subscribe(res => {
     //   console.log("status", res);
@@ -100,18 +102,38 @@ export class RegisterSignerService {
   ListSpecificDocs(uuid){
     let docs = '/api/v1/documents/'
     let url = `${docs}${uuid}${this.apiKey}${this.cript}`;
-    this.httpClient.get(url).subscribe(res => {
-      console.log("Documento especifico", res);
-    });
+    return this.httpClient.get(url);
+  }
+
+  DownloadDoc(uuid){
+    let docs = '/api/v1/documents/'
+    let url = `${docs}${uuid}/download${this.apiKey}${this.cript}`;
+    let downloadData = {
+      type: "PDF",
+      language: "pt"
+    }
+    return this.httpClient.post(url, downloadData)
   }
 
   //Listing template
   ListTemplate(){
     //ducuments=Template
-    let template = '/api/v1/templates'
+    let template = '/api/v1/templates';
     let url = `${template}${this.apiKey}${this.cript}`;
+    console.log(url);
     this.httpClient.post(url, this.httpOptions).subscribe(res => {
       console.log("Template", res);
+    });
+  }
+
+  //Listing template
+  ListSafes(){
+    //ducuments=Template
+    let safes = '/api/v1/safes';
+    let url = `${safes}${this.apiKey}${this.cript}`;
+    console.log(url);
+    this.httpClient.get(url).subscribe(res => {
+      console.log("Safes", res);
     });
   }
 }

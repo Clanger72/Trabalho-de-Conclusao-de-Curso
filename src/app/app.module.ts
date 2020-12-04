@@ -17,11 +17,11 @@ import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-import { RegisterUserService } from './shared/services/register-user.service';
+import { RegisterUserService } from './shared/services/user.service';
 import { RegisterUser } from './shared/model/register-user.model';
 import { DependentService } from './shared/services/dependent.service';
 import { DependentData } from './shared/model/dependent-data';
-import { SignatureModel, Template, SendContract } from './shared/model/contract';
+import { SignatureModel, Template, SendContract, TemplateDependent, ListContract } from './shared/model/contract';
 import { RegisterSignerService } from './shared/services/register-signer.service';
 import { EmbedModel } from './shared/model/signature-model';
 
@@ -72,7 +72,9 @@ import { HomeAdminComponent } from './home-admin/home-admin.component';
     RegisterSignerService,
     EmbedModel,
     Template,
-    SendContract
+    SendContract,
+    TemplateDependent,
+    ListContract
   ],
   bootstrap: [AppComponent]
 })

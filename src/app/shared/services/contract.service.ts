@@ -34,7 +34,7 @@ export class ContractService {
 
   getAllContract(id) {
     //'TjIr2ubu9sViI9NmpeXeMvoF2FM2'
-      return this.afs.collection('user').doc(id).collection('contract').snapshotChanges();
+      return this.afs.collection('user').doc(id).collection('template').snapshotChanges();
   }
 
 
@@ -44,6 +44,10 @@ export class ContractService {
         resolve(res);
       }, err => reject(err));
     })
+  }
+
+  getSpecificTemplateUser(uuid){
+    return this.afs.collection('user').doc(uuid).collection('template').snapshotChanges();
   }
 
   addSigner(id, signer){

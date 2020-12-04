@@ -2,57 +2,57 @@
     <div class="col-md-4"></div>
     <div class="mx-auto pt-3 col-md-8">
         <div class="jumbotron bg-light">
-          <form id="contact" method="create" class="form" role="form" action="register-user.component.ts" (ngSubmit)="create(registerUser)">
+          <form id="contact" method="create" class="form" role="form" action="register-user.component.ts" (ngSubmit)="create(registerUsers)">
             <div class="row">
               <div class="col-xs-6 col-md-3 form-group">
                   <label for="userCpf">CPF</label>
-                  <input class="form-control" id="userCpf" name="CPF" required [(ngModel)]="registerUser.cpf" placeholder="000.000.000-00" type="text"/>
+                  <input class="form-control" id="userCpf" name="CPF" required [(ngModel)]="registerUsers.cpf" placeholder="000.000.000-00" type="text"/>
               </div>
               <div class="col-xs-4 col-md-6 form-group">
                 <label for="userNome">Nome Completo:</label>
-                <input type="name" name="userNome" class="form-control" id="userNome" required [(ngModel)]="registerUser.nome" placeholder="Informe seu nome">
+                <input type="text" name="userNome" class="form-control" id="userNome" required [(ngModel)]="registerUsers.nome" placeholder="Informe seu nome">
               </div>
               <div class="col-xs-4 col-md-3 form-group">
                 <label for="userAge">Idade:</label>
-                <input type="age" name="userAge" class="form-control" id="userAge" required [(ngModel)]="registerUser.age" placeholder="Informe sua idade">
+                <input type="text" name="userAge" class="form-control" id="userAge" required [(ngModel)]="registerUsers.age" placeholder="Informe sua idade">
               </div>
               <div class="col-xs-4 col-md-3 form-group">
                 <label for="telefone">Telefone:</label>
-                <input type="telefone" name="userTelefone" class="form-control" id="telefone" required [(ngModel)]="registerUser.telefone" placeholder="Informe seu telefone">
+                <input type="text" name="userTelefone" class="form-control" id="telefone" required [(ngModel)]="registerUsers.telefone" placeholder="Informe seu telefone">
               </div>
               <div class="col-xs-4 col-md-6 form-group">
                 <label for="email">E-mail:</label>
-                <input type="email" name="userEmail" class="form-control" id="email" required [(ngModel)]="registerUser.email" placeholder="Informe seu e-mail">
+                <input type="text" name="userEmail" class="form-control" id="email" required [(ngModel)]="registerUsers.email" placeholder="Informe seu e-mail">
               </div>
               <div class="col-xs-4 col-md-3 form-group">
                 <label for="dtBirth">Data de Nascimeto</label>
-                <input class="form-control" id="dtBirth" name="dtBirth" type="date" required [(ngModel)]="registerUser.dtBirth"/>
+                <input class="form-control" id="dtBirth" name="dtBirth" type="date" required [(ngModel)]="registerUsers.dtBirth"/>
               </div>
               <div class="col-xs-4 col-md-3 form-group">
                 <label for="cep">CEP:</label>
-                <input type="cep" name="cep" class="form-control" id="cep" required [(ngModel)]="registerUser.cep" placeholder="5.653.521-6">
+                <input type="text" name="cep" class="form-control" id="cep" required [(ngModel)]="registerUsers.cep" placeholder="00000-00">
               </div>
               <div class="col-xs-4 col-md-6 form-group">
                 <label for="city">Cidade</label>
-                <input class="form-control" id="city" name="city" required [(ngModel)]="registerUser.city" placeholder="Cidade" type="text" />
+                <input class="form-control" id="city" name="city" required [(ngModel)]="registerUsers.city" placeholder="Cidade" type="text" />
               </div><!--fim control-group-->
               <div class="col-xs-4 col-md-3 form-group">
                   <label for="number">Número</label>
-                  <input class="form-control" id="number" name="number" required [(ngModel)]="registerUser.number" placeholder="000"  type="text">
+                  <input class="form-control" id="number" name="number" required [(ngModel)]="registerUsers.number" placeholder="000"  type="text">
               </div>
             </div> <!-- fim row -->
             <div class="row">
                 <div class="col-xs-4 col-md-3 form-group">
                   <label for="neighborhood">Bairro</label>
-                  <input class="form-control" id="street" name="neighborhood" required [(ngModel)]="registerUser.neighborhood" placeholder="Bairro"  type="text">
+                  <input class="form-control" id="street" name="neighborhood" required [(ngModel)]="registerUsers.neighborhood" placeholder="Bairro"  type="text">
                 </div>
                 <div class="col-xs-4 col-md-6 form-group">
                   <label for="street">Rua</label>
-                  <input class="form-control" id="street" name="street" required [(ngModel)]="registerUser.street" placeholder="Rua"  type="text">
+                  <input class="form-control" id="street" name="street" required [(ngModel)]="registerUsers.street" placeholder="Rua"  type="text">
                 </div>
                 <div class="col-xs-4 col-md-3 form-group">
                     <label for="state">Estado</label>
-                    <select class="form-control"id="state" name="state" required [(ngModel)]="registerUser.state">
+                    <select class="form-control"id="state" name="state" required [(ngModel)]="registerUsers.state">
                         <option>AC</option>
                         <option>AL</option>
                         <option>AP</option>
@@ -96,8 +96,8 @@
                 <br>
                 <button type="submit"
                 class="btn btn-dark bg-secondary m-2 col-12"
-                [disabled]="!registerUser.cpf || !registerUser.nome || !registerUser.dtBirth || !registerUser.telefone || !registerUser.email ||
-                            !registerUser.cep || !registerUser.street || !registerUser.number || !registerUser.city || !registerUser.state ||
+                [disabled]="!registerUsers.cpf || !registerUsers.nome || !registerUsers.dtBirth || !registerUsers.telefone || !registerUsers.email ||
+                            !registerUsers.cep || !registerUsers.street || !registerUsers.number || !registerUsers.city || !registerUsers.state ||
                             !password || !passwordCheck"
                             title="Preencha todos os campos" >Criar Conta</button>
               </div>

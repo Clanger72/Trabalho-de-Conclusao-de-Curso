@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterUser } from '../shared/model/register-user.model';
-import { RegisterUserService } from '../shared/services/register-user.service';
+import { RegisterUserService } from '../shared/services/user.service';
 import { LoginService } from '../shared/services/login.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 
@@ -13,40 +14,45 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class RegisterUserComponent implements OnInit {
 
-  password: string;
-  passwordCheck: string;
+  password = '';
+  passwordCheck: '';
   errorMessage = "";
   SuccessMessage = "";
   error: {name:string, message:string} = {name: "", message: ""};
-  registerUsers: RegisterUser[];
+  registerUsers = new RegisterUser;
   userData: any;
   userId: any;
+  formularioDeUsuario: FormGroup;
+
+
 
   constructor(private router: Router,
               private loginService: LoginService,
               private registerUserService: RegisterUserService,
-              public registerUser: RegisterUser,
-              private afu: AngularFireAuth) {
-                this.afu.authState.subscribe((auth =>{
-                  if(auth){
-                    this.userData = auth;
-                    localStorage.setItem('user', JSON.stringify(this.userData));
-                    JSON.parse(localStorage.getItem('user'));
-                    this.userId = this.userData.uid;
-                }else{
-                    localStorage.setItem('user', null);
-                    JSON.parse(localStorage.getItem('user'));
-                }
-                }))
-               }
+              private afu: AngularFireAuth,
+              private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.registerUserService.getUser().subscribe(data =>{
-      this.registerUsers = data.map(e =>{
-        const data = e.payload.doc.data() as RegisterUser;
-        const id = e.payload.doc.id;
-        return { id, ...data };
-      })
+    this.registerUsers = new RegisterUser;
+    this.registerUsers.email = "";
+    this.password = "";
+    this.criarFormularioDeUsuario();
+  }
+
+  criarFormularioDeUsuario() {
+    this.formularioDeUsuario = this.fb.group({
+      nome: [''],
+      email: [''],
+      cpf: [''],
+      age: [''],
+      telefone: [''],
+      cep: [''],
+      city: [''],
+      number: [''],
+      neighborhood: [''],
+      street: [''],
+      senha: [''],
+      confirmarSenha: ['']
     });
   }
 
@@ -57,6 +63,50 @@ export class RegisterUserComponent implements OnInit {
 
   back(){
     this.router.navigate(['login']);
+  }
+
+  create(registerUser: RegisterUser){
+    console.log('this.isValidCpf(this.registerUser)',this.isValidCpf(this.registerUsers));
+    if(this.isValidCpf(this.registerUsers)){
+      if(this.registerUsers.age >= "18"){
+        this.clearErrorMessage();
+        this.loginService.doRegister(this.registerUsers.email, this.password).then(async _res => {
+          let user = await this.afu.currentUser;
+          if(registerUser.cpf)
+          this.registerUsers = {
+            id: user.uid,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            displayName: registerUser.nome,
+            nome: registerUser.nome,
+            age: registerUser.age,
+            cpf: registerUser.cpf,
+            dtBirth: registerUser.dtBirth,
+            telefone: registerUser.telefone,
+            cep: registerUser.cep,
+            neighborhood: registerUser.neighborhood,
+            street: registerUser.street,
+            number: registerUser.number,
+            city: registerUser.city,
+            state: registerUser.state
+          }
+          this.registerUserService.updateUser(this.registerUsers);
+
+          this.errorMessage = "";
+          this.SuccessMessage = "Sua conta foi criada";
+
+        }, err => {
+          this.errorMessage = err.message;
+          this.SuccessMessage = "";
+        })
+      }else{
+        console.log("Menor de idade");
+        this.errorMessage = "Menores de 18 anos devem solicitar que seu pai, mãe ou responsável legal se cadastre!!"
+      }
+    }else{
+      console.log("invalido")
+      this.errorMessage = "CPF inválido, confira o número digitado!"
+    }
   }
 
   isValidCpf(registerUser: RegisterUser){
@@ -115,49 +165,5 @@ export class RegisterUserComponent implements OnInit {
     else {
         return true;
     }
-  }
-
-  create(registerUser: RegisterUser){
-    if(this.isValidCpf(this.registerUser)){
-      if(this.registerUser.age >= "18"){
-        this.clearErrorMessage();
-        this.loginService.doRegister(this.registerUser.email, this.password).then(async _res => {
-          let user = await this.afu.currentUser;
-          if(registerUser.cpf)
-          registerUser = {
-            id: user.uid,
-            email: user.email,
-            emailVerified: user.emailVerified,
-            displayName: registerUser.nome,
-            nome: registerUser.nome,
-            age: registerUser.age,
-            cpf: registerUser.cpf,
-            dtBirth: registerUser.dtBirth,
-            telefone: registerUser.telefone,
-            cep: registerUser.cep,
-            neighborhood: registerUser.neighborhood,
-            street: registerUser.street,
-            number: registerUser.number,
-            city: registerUser.city,
-            state: registerUser.state
-          }
-          this.registerUserService.updateUser(registerUser);
-
-          this.errorMessage = "";
-          this.SuccessMessage = "Sua conta foi criada";
-
-        }, err => {
-          this.errorMessage = err.message;
-          this.SuccessMessage = "";
-        })
-      }else{
-        console.log("Menor de idade");
-        this.errorMessage = "Menores de 18 anos devem solicitar que seu pai, mãe ou responsável legal se cadastre!!"
-      }
-    }else{
-      console.log("invalido")
-      this.errorMessage = "CPF inválido, confira o número digitado!"
-    }
-
   }
 }

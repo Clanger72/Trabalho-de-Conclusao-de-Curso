@@ -10,15 +10,15 @@ if (is_safari) {
      if (url.indexOf("?")>-1){
     	 url = url.substr(0,url.indexOf("?"));
      }
-     window.location.replace("http://demo.d4sign.com.br/embed/safari_fix?r="+url+"&param="+param);
+     window.location.replace("https://secure.d4sign.com.br/embed/safari_fix?r="+url+"&param="+param);
  }
 }
 (function() {
   var HEIGHT, HOST, PROTOCOL, TIMEOUT, WIDTH, addEventListener, attach_element, configure, createElement, create_iframe, getElementById, host_for, origin, path_for, protocol_for, query_for, timeout_for, window;
 
-  PROTOCOL = "http";
+  PROTOCOL = "https";
 
-  HOST = "http://demo.d4sign.com.br/embed/viewblob";
+  HOST = "secure.d4sign.com.br/embed/viewblob";
 
   WIDTH = {
     MIN: 600,

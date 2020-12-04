@@ -1,4 +1,4 @@
-import { Injectable, NgZone  } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
@@ -16,8 +16,7 @@ export class LoginService {
   constructor(
     public afs: AngularFirestore,
     private afu: AngularFireAuth,
-    private router: Router,
-    private ngZone: NgZone) {
+    private router: Router) {
     this.afu.authState.subscribe(user =>{
         if(user){
             this.userData = user;
@@ -41,7 +40,7 @@ export class LoginService {
   }
 
   async login(email: string, password: string ){
-      var result = await this.afu.signInWithEmailAndPassword(email, password);
+      return await this.afu.signInWithEmailAndPassword(email, password);
   }
 
   async sendEmailVerification(actionCodeSettings: any): Promise<void>{

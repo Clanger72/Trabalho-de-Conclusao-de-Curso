@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { RegisterUserService } from '../shared/services/register-user.service';
+import { RegisterUserService } from '../shared/services/user.service';
 import { RegisterUser } from '../shared/model/register-user.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
@@ -59,12 +59,11 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  async salvar(registerUser: RegisterUser){
-    let user = await this.afu.currentUser;
+  salvar(registerUser: RegisterUser){
     registerUser = {
-      id: user.uid,
-      email: user.email,
-      emailVerified: user.emailVerified,
+      id: registerUser.id,
+      email: registerUser.email,
+      emailVerified: registerUser.emailVerified,
       nome: registerUser.nome,
       age: registerUser.age,
       displayName: registerUser.nome,

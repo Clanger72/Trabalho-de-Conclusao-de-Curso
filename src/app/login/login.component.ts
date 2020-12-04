@@ -1,9 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { RegisterUserService } from '../shared/services/register-user.service'
+import { RegisterUserService } from '../shared/services/user.service'
 import { Router } from '@angular/router';
-import { LoginService } from '../shared/services/login.service'
-import { RegisterUser } from '../shared/model/register-user.model';
-import * as firebase from 'firebase';
+import { LoginService } from '../shared/services/login.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 
@@ -19,8 +17,6 @@ export class LoginComponent implements OnInit {
 
   @Output() loginEmail = "";
   @Output() loginPassword = "";
-  loginUser: void[];
-  registerUsers: RegisterUser[];
 
   message = "";
   SuccessMessage = "";
@@ -34,7 +30,6 @@ export class LoginComponent implements OnInit {
     private registerUserService: RegisterUserService,
     private loginService: LoginService,
     private router: Router,
-    public registerUser: RegisterUser,
     private afu: AngularFireAuth) {
       this.afu.authState.subscribe((auth =>{
         if(auth){
