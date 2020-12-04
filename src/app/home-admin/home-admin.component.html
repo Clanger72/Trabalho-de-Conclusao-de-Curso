@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
       <nav class="navbar navbar-light bg-light col-md-12 border-bottom">
-          <img src="../../assets/images/destrava.jpg" id="logo" class="img-rounded">
+        <a class="navbar-brand my-2 px-3" id="logo" routerLink="home">Assinantes</a>
           <form class="form-inline my-2 my-lg-0">
             <div>
               <h5 id="userHome">{{userName}}</h5>
@@ -41,15 +41,23 @@
               <th scope="col">Nome</th>
               <th scope="col">CPF</th>
               <th scope="col">Data Assinatura</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let Contract of contract; let count = index">
+            <tr *ngFor="let Contract of ListContracts; let count = index">
               <th scope="row">{{count}}</th>
-              <td>{{Contract.dtSignature}}</td>
+              <td>{{Contract.nameDoc}}</td>
+              <td>{{Contract.nome}}</td>
+              <td>{{Contract.cpf}}</td>
+              <td>{{Contract.email}}</td>
+              <td><button class="btn btn-dark bg-secondary" (click)="Download(Contract.uuid)">Download</button></td>
             </tr>
             <tr>
               <th></th>
+              <td></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>

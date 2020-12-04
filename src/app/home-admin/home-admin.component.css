@@ -1,6 +1,8 @@
 #logo{
-  float: right;
-  width: 21%;
-  max-width:50%;
-  height:auto
+  font-family: Brush Script MT, Brush Script Std, cursive;
+  font-size: xx-large;
+}
+
+#userHome{
+  font-size: x-large;
 }

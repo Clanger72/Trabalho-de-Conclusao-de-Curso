@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, Output, ViewChild } from '@angular/core';
 import { LoginService } from '../shared/services/login.service';
-import { RegisterUserService } from '../shared/services/register-user.service';
+import { RegisterUserService } from '../shared/services/user.service';
 import { RegisterUser } from '../shared/model/register-user.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { SendSegnerService } from '../shared/services/send-segner.service';

@@ -51,25 +51,29 @@
             <div class="col-sm-8 contact-form">
                 <form id="contact" method="post" class="form" role="form"  (ngSubmit)="createNewDependent(dependentData)">
                     <div class="row">
-                        <div class="col-xs-6 col-md-3 form-group">
+                        <div class="col-xs-6 col-md-4 form-group">
                             <label for="cpf">CPF</label>
-                            <input class="form-control" id="cpf" name="cpf" [(ngModel)]="dependentData.cpf" placeholder="000.000.000-00" type="text" required autofocus />
+                            <input class="form-control" id="cpf" name="cpf" required [(ngModel)]="dependentData.cpf" placeholder="000.000.000-00" type="text" required autofocus />
                         </div>
-                        <div class="col-xs-4 col-md-9 form-group">
+                        <div class="col-xs-4 col-md-6 form-group">
                             <label for="inputname">Nome</label>
-                            <input class="form-control" id="inputname" name="nome" [(ngModel)]="dependentData.nome" placeholder="Nome Completo" type="cpf" />
+                            <input class="form-control" id="inputname" name="nome" required [(ngModel)]="dependentData.nome" placeholder="Nome Completo" type="cpf" />
                         </div>
-                        <div class="col-xs-6 col-md-3 form-group">
+                        <div class="col-xs-4 col-md-2 form-group">
+                          <label for="inputage">Idade</label>
+                          <input class="form-control" id="inputage" name="age" required [(ngModel)]="dependentData.age" placeholder="Idade" type="text" />
+                        </div>
+                        <div class="col-xs-6 col-md-4 form-group">
                             <label for="inputtelefone">Telefone</label>
-                            <input class="form-control" id="inputtelefone" name="telefone" [(ngModel)]="dependentData.telefone" placeholder="Telefone" type="text" />
+                            <input class="form-control" id="inputtelefone" name="telefone" required [(ngModel)]="dependentData.telefone" placeholder="Telefone" type="text" />
                         </div>
-                        <div class="col-xs-4 col-md-3 form-group">
+                        <div class="col-xs-4 col-md-4 form-group">
                             <label for="inputDtBirth">Data de Nascimeto</label>
-                            <input class="form-control" id="inputDtBirth" name="Nascimento" [(ngModel)]="dependentData.dtBirth" type="date" />
+                            <input class="form-control" id="inputDtBirth" name="Nascimento" required [(ngModel)]="dependentData.dtBirth" type="date" />
                         </div>
-                        <div class="col-xs-4 col-md-3 form-group">
+                        <div class="col-xs-4 col-md-4 form-group">
                             <label for="parentesco">Parentesco</label>
-                            <select class="form-control"id="parentesco" [(ngModel)]="dependentData.typeParent" name="Parentesco" >
+                            <select class="form-control" id="parentesco" required [(ngModel)]="dependentData.typeParent" name="Parentesco" >
                                 <option>Parentesco</option>
                                 <option>Pai</option>
                                 <option>Mãe</option>
@@ -77,16 +81,35 @@
                                 <option>Irmão maior de 18 anos</option>
                             </select>
                         </div>
+                        <div class="col-xs-6 col-md-8 form-group">
+                          <label for="inputcontactResp">Nome de outro responsável:</label>
+                          <input class="form-control" id="inputcontactResp" name="nome" required [(ngModel)]="dependentData.otherContact" placeholder="Nome de outro Responsál" type="text" />
+                        </div>
+                        <div class="col-xs-4 col-md-4 form-group">
+                            <label for="inputcontact">Telefone do outro Responsável:</label>
+                            <input class="form-control" id="inputcontact" name="telefone" required [(ngModel)]="dependentData.contact" type="text" />
+                        </div>
                     </div> <!-- fim row -->
                     <!-- Text input endereco-->
                     <br />
                     <div class="row">
                         <div class="col-xs-8 col-md-10 form-group">
-                            <button class="btn btn-primary pull-right" type="submit">Salvar</button>
+                            <button class="btn btn-primary pull-right" type="submit"
+                            [disabled]="!dependentData.cpf || !dependentData.nome || !dependentData.age || !dependentData.telefone ||
+                            !dependentData.dtBirth || !dependentData.typeParent || !dependentData.otherContact || !dependentData.contact"
+                            title="Preencha todos os campos">Salvar</button>
                         </div>
                         <div class="col-xs-4 col-md-2 form-group">
                             <button class="btn btn-primary pull-right" type="submit" (click)="backToList()">Voltar</button>
                         </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-4 col-md-10 form-group">
+                          <p *ngIf="errorMessage.length > 0" class="text-danger">{{errorMessage}}</p>
+                      </div>
+                      <div class="col-xs-4 col-md-10 form-group">
+                          <p *ngIf="SuccessMessage.length > 0" class="text-success">{{SuccessMessage}}</p>
+                      </div>
                     </div>
                 </form>
             </div> <!-- fim div da direita -->

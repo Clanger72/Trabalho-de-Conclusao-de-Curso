@@ -39,7 +39,7 @@ export class Template{
   name_document: string;
   //uuid_folder: string; deixar sem folfer por enquanto
   templates: {
-    "MzQ3": {
+    "MjMwMjA": {
       nome: string;
       cpf: string;
       telefone: string;
@@ -59,7 +59,7 @@ export class TemplateDependent{
   name_document: string;
   //uuid_folder: string; deixar sem folfer por enquanto
   templates: {
-    "MzQ4": {
+    "MjM1Mzc": {
       nome: string;
       cpf: string;
       telefone: string;
@@ -85,4 +85,18 @@ export class TemplateDependent{
 export class SendContract{
   skip_email: string;
   workflow:string;
+}
+
+export class Download{
+  url: string;
+  nome:string;
+}
+
+
+export class ListContract{
+    uuidDoc: string;
+    nameDoc: string;
+    cpf: string;
+    email: string;
+    nome: string;
 }

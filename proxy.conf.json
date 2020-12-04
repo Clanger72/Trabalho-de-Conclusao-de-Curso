@@ -1,9 +1,9 @@
 {
   "/api": {
-    "target": "http://demo.d4sign.com.br/",
-    "secure": false,
+    "target": "https://secure.d4sign.com.br",
+    "secure": true,
     "pathRewrite": {
-      "^/api": "http://demo.d4sign.com.br/api"
+      "^/api": "https://secure.d4sign.com.br/api"
     },
     "changeOrigin": true
   }
