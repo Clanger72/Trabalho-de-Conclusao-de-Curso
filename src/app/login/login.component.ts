@@ -71,9 +71,10 @@ export class LoginComponent implements OnInit {
   }
 
   ResetPassword(){
-    this.loginService.sendPasswordResetEmail(this.loginEmail);
-    let validSend = (this.loginEmail !== "") ? true : false;
-    validSend ? this.message = "Sua senha foi enviada, verifique seu e-mail!" : this.message = "Digite seu e-mail!";
-    alert(this.message);
+    this.loginService.sendPasswordResetEmail(this.loginEmail).then(e => {
+      let validSend = (this.loginEmail !== "") ? true : false;
+      validSend ? this.message = "Sua senha foi enviada, verifique seu e-mail!" : this.message = "Digite seu e-mail!";
+      alert(this.message);
+    })
   }
 }

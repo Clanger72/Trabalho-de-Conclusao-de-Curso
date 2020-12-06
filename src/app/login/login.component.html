@@ -4,6 +4,8 @@
         <div class="center-block col-md-4 mt-5">
             <div class="jumbotron bg-light">
                 <form (ngSubmit)="login()">
+                  <a class="ml-md-5" id="logo">Assinantes</a>
+                  <br><br>
                     <div class="form-group">
                         <label for="InputEmail">E-mail</label>
                         <input type="email" name="loginEmail"
@@ -15,7 +17,7 @@
                         required [(ngModel)]="loginPassword" class="form-control" id="exampleInputPassword1" placeholder="******">
                     </div>
                     <div class="form-group">
-                      <a href="#" class="text-secondary" (click)="ResetPassword()">Esqueseu a Senha?</a>
+                      <a class="text-secondary" (click)="ResetPassword()">Esqueseu a Senha?</a>
                     </div>
                     <div class="form-group">
                         <a href="#" routerLink="/register" class="text-secondary">Cadastre-se aqui!</a>

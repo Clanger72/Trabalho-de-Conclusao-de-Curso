@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CompileModule} from "p3x-angular-compile"
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,6 +35,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { ContractSignatureComponent } from './contract-signature/contract-signature.component';
 import { HomeAdminComponent } from './home-admin/home-admin.component';
+import { DependentSignerComponent } from './dependent-signer/dependent-signer.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { HomeAdminComponent } from './home-admin/home-admin.component';
     VerifyEmailComponent,
     ContractSignatureComponent,
     HomeAdminComponent,
+    DependentSignerComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -62,6 +65,7 @@ import { HomeAdminComponent } from './home-admin/home-admin.component';
     PoModule,
     RouterModule.forRoot([]),
     BrowserAnimationsModule,
+    CompileModule
   ],
   providers: [
     RegisterUserService,

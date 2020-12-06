@@ -84,7 +84,6 @@ export class ContractSignatureComponent implements OnInit {
     this.registerSigner.createDocument(this.template).subscribe(data =>{
       this.createSigner(this.userEmail, data);
       this.contractService.createTemplateForSigner(this.userId, data);
-      //this.registerSigner.embed(this.embedModel, '');
     })
   }
 
@@ -102,9 +101,9 @@ export class ContractSignatureComponent implements OnInit {
     };
     console.log(templateRes.uuid);
     this.registerSigner.createListSigner('createlist', this.signatureModel, templateRes.uuid).subscribe( response =>{
-      this.registerSigner.sendSigner('sendtosigner', templateRes.uuid).subscribe(data =>{
-        this.registerSigner.embed(this.embedModel, templateRes.uuid);
-      })
+      // this.registerSigner.sendSigner('sendtosigner', templateRes.uuid).subscribe(data =>{
+      //   this.registerSigner.embed(this.embedModel, templateRes.uuid);
+      // })
     })
   }
 }

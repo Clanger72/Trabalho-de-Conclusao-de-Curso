@@ -71,7 +71,7 @@ export class RegisterSignerService {
     console.log('signerModel', signerModel, 'uuid', uuid);
     d4sign.configure({
       container: "signature-div",
-      key: uuid,
+      key: '68cf3350-905b-48c7-8742-ffb78fdfcc58',
       protocol: "https",
       host: "secure.d4sign.com.br/embed/viewblob",
       signer: signerModel,
@@ -93,9 +93,6 @@ export class RegisterSignerService {
     let safes = '/api/v1/documents/04/'
     let url = `${safes}${documents}${this.apiKey}${this.cript}`;
     return this.httpClient.get(url);
-    // .subscribe(res => {
-    //   console.log("status", res);
-    // });
   }
 
   //Listing documento específico

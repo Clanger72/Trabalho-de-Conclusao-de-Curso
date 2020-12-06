@@ -76,6 +76,7 @@ export class TemplateDependent{
       parent: string;
       telefone_dep: string;
       idade_dep: string;
+      dtBirth_dep: string;
       outro: string;
       contato_dep: string;
     }

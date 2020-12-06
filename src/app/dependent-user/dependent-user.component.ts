@@ -1,13 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { DependentService } from '../shared/services/dependent.service';
 import { DependentData } from '../shared/model/dependent-data';
 import { RegisterSignerService } from '../shared/services/register-signer.service';
 import { TemplateDependent, SignatureModel } from '../shared/model/contract';
+import { ContractService } from '../shared/services/contract.service';
+import { DatePipe } from '@angular/common';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { RegisterUser } from '../shared/model/register-user.model';
 import { RegisterUserService } from '../shared/services/user.service';
+import { EmbedModel } from '../shared/model/signature-model';
+import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-dependent-user',
@@ -16,23 +22,32 @@ import { RegisterUserService } from '../shared/services/user.service';
 })
 export class DependentUserComponent implements OnInit {
 
-  newDependent: boolean = false;
-  dependentDatas: DependentData[];
+  @Input() newDependent: boolean = false;
+  @Output() dependentDatas: DependentData[];
   registerUsers: RegisterUser[];
   errorMessage = "";
   SuccessMessage = "";
   userData: any;
   userId: any;
+  html_string;
 
   @Input() lDependent: boolean = false;
   @Input() lEdit: boolean = false;
+  @Input() embed: boolean = false;
 
   constructor(private dependentService: DependentService,
               public dependentData: DependentData,
+              public datePipe: DatePipe,
               private registerSignerService: RegisterSignerService,
               private service: RegisterUserService,
+              private embedModel: EmbedModel,
               private registerUser: RegisterUser,
+              private sanitizer: DomSanitizer,
+              private contractService: ContractService,
+              private router: Router,
               private templateDependent: TemplateDependent,
+              private elRef: ElementRef,
+              private cdRef: ChangeDetectorRef,
               private signatureModel: SignatureModel,
               private fireStore: AngularFirestore,
               private afu: AngularFireAuth) {
@@ -76,7 +91,7 @@ export class DependentUserComponent implements OnInit {
         cpf: dependentData.cpf,
         telefone: dependentData.telefone,
         age: dependentData.age,
-        dtBirth: dependentData.dtBirth,
+        dtBirth: this.datePipe.transform(dependentData.dtBirth, 'dd-MM-yyyy'),
         typeParent: dependentData.typeParent,
         otherContact: dependentData.otherContact,
         contact: dependentData.contact
@@ -90,12 +105,17 @@ export class DependentUserComponent implements OnInit {
   }
 
   SignerContractForDependent(dependentData: DependentData){
-    console.log(dependentData);
-    //chamar assinatura
+    this.embed = true;
     this.service.getUser().subscribe(data =>{
       data.map(e =>{
         this.registerUser = e.payload.doc.data() as RegisterUser
         if(this.registerUser.id == this.userId){
+          this.embedModel = {
+            email: e.payload.doc.data()["email"],
+            display_name: e.payload.doc.data()["nome"],
+            documentation: e.payload.doc.data()["cpf"],
+            birthday: e.payload.doc.data()["dtBirth"]
+          }
           this.templateDependent = {
             name_document: 'Termo de Responsabilidade Dependente Destrava',
             templates: {
@@ -115,16 +135,19 @@ export class DependentUserComponent implements OnInit {
                 cpf_dep: dependentData.cpf,
                 parent: dependentData.typeParent,
                 telefone_dep: dependentData.telefone,
-                idade_dep: dependentData.dtBirth,
+                idade_dep: dependentData.age,
+                dtBirth_dep: dependentData.dtBirth,
                 outro: dependentData.otherContact,
                 contato_dep: dependentData.contact,
               }
             }
           }
+          console.log(' this.templateDependent', this.templateDependent)
           this.registerSignerService.ListTemplate();
           this.registerSignerService.createDocumentDependent(this.templateDependent).subscribe(res =>{
             console.log("Template Dependente", res);
             this.createSigner(this.registerUser.email, res);
+            this.contractService.createTemplateForSigner(this.userId, data);
           })
         }
       })
@@ -132,7 +155,7 @@ export class DependentUserComponent implements OnInit {
   }
 
   createSigner(email, templateResDep){
-    console.log("templateRes", templateResDep.uuid);
+    console.log("templateRes", templateResDep.uuid, email);
     this.signatureModel = {
       signers : [
         {
@@ -145,14 +168,20 @@ export class DependentUserComponent implements OnInit {
         }]
     };
     this.registerSignerService.createListSigner('createlist', this.signatureModel, templateResDep.uuid).subscribe( response =>{
-      // this.registerSigner.sendSigner('sendtosigner', templateRes.uuid).subscribe(data =>{
-      //   this.registerSigner.embed(this.embedModel, templateRes.uuid);
+        this.newDependent = false;
+        this.embed = true;
+        this.html_string = this.sanitizer.bypassSecurityTrustHtml('<input type="button" value="Voltar" class="btn btn-dark bg-secondary col-md-6">');
+        this.registerSignerService.embed(this.embedModel, templateResDep.uuid);
+      // this.registerSignerService.sendSigner('sendtosigner', templateResDep.uuid).subscribe(data =>{
+      //   this.registerSignerService.embed(this.embedModel, templateResDep.uuid);
       // })
     })
   }
 
   backToList(): void{
     this.newDependent = false;
+    this.embed = false;
+    console.log("Entrou");
   }
 
   isValidCpfDep(dependentData: DependentData){
