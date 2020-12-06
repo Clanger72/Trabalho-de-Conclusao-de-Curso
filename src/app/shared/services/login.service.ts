@@ -50,11 +50,12 @@ export class LoginService {
   }
 
   async sendPasswordResetEmail(passwordResetEmail: string){
-    return await this.afu.sendPasswordResetEmail(passwordResetEmail).then(res => {
-      window.alert('Email de redefinição de senha enviado, verifique sua caixa de entrada');
-    }).catch((error) => {
-      window.alert(error);
-    })
+    return await this.afu.sendPasswordResetEmail(passwordResetEmail)
+    // .then(res => {
+    //   window.alert('Email de redefinição de senha enviado, verifique sua caixa de entrada');
+    // }).catch((error) => {
+    //   window.alert(error);
+    // })
   }
 
   get confirmation():boolean{

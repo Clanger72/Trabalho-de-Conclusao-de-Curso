@@ -1,4 +1,4 @@
-<div class="container-fluid "  *ngIf="! newDependent">
+<div class="container-fluid "  *ngIf="! newDependent && !embed">
     <div class="row">
         <table class="table">
             <thead>
@@ -40,7 +40,20 @@
     </div>
 </div>
 
-<div class="page-content inset" *ngIf="newDependent">
+<div class="page-content inset" *ngIf="embed && !newDependent">
+  <div id='signature-div'>
+  </div>
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-8">
+      <div (click)="backToList()">
+        <div [innerHtml]="html_string"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-content inset" *ngIf="newDependent && !embed">
     <div class="row">
       <div class="col-md-12">
       <br>
@@ -94,13 +107,13 @@
                     <br />
                     <div class="row">
                         <div class="col-xs-8 col-md-10 form-group">
-                            <button class="btn btn-primary pull-right" type="submit"
+                            <button class="btn btn-dark bg-secondary" type="submit"
                             [disabled]="!dependentData.cpf || !dependentData.nome || !dependentData.age || !dependentData.telefone ||
                             !dependentData.dtBirth || !dependentData.typeParent || !dependentData.otherContact || !dependentData.contact"
                             title="Preencha todos os campos">Salvar</button>
                         </div>
                         <div class="col-xs-4 col-md-2 form-group">
-                            <button class="btn btn-primary pull-right" type="submit" (click)="backToList()">Voltar</button>
+                            <button class="btn btn-dark bg-secondary" type="submit" (click)="backToList()">Voltar</button>
                         </div>
                     </div>
                     <div class="row">

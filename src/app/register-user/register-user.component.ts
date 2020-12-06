@@ -5,6 +5,7 @@ import { RegisterUser } from '../shared/model/register-user.model';
 import { RegisterUserService } from '../shared/services/user.service';
 import { LoginService } from '../shared/services/login.service';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class RegisterUserComponent implements OnInit {
 
   constructor(private router: Router,
               private loginService: LoginService,
+              public datePipe: DatePipe,
               private registerUserService: RegisterUserService,
               private afu: AngularFireAuth,
               private fb: FormBuilder) {}
@@ -81,7 +83,7 @@ export class RegisterUserComponent implements OnInit {
             nome: registerUser.nome,
             age: registerUser.age,
             cpf: registerUser.cpf,
-            dtBirth: registerUser.dtBirth,
+            dtBirth: this.datePipe.transform(registerUser.dtBirth, 'dd-MM-yyyy'),
             telefone: registerUser.telefone,
             cep: registerUser.cep,
             neighborhood: registerUser.neighborhood,
